@@ -1,4 +1,4 @@
-package by.mercury.core.model;
+package by.mercury.core.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,26 +6,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 /**
- * Describes users
+ * DTO class for {@link by.mercury.core.model.UserModel}
  *
  * @author Yegor Ikbaev
  */
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id"})
-@Builder
-@Entity
-public class UserModel {
+public class UserData {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Integer peerId;

@@ -20,6 +20,11 @@ public class VkUserService implements UserService {
     private UserDao userDao;
 
     @Override
+    public Optional<UserModel> findByUserId(Long userId) {
+        return userDao.findByUserId(userId);
+    }
+
+    @Override
     public Optional<UserModel> findByPeerId(Integer peerId) {
         return userDao.findByPeerId(peerId);
     }

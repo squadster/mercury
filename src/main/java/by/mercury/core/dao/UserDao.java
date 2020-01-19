@@ -13,10 +13,18 @@ import java.util.Optional;
 public interface UserDao extends CrudRepository<UserModel, Long> {
 
     /**
+     * Retrieves an entity by its {@link UserModel#getUserId()}.
+     *
+     * @param userId may be null
+     * @return the entity with the given userId or {@literal Optional#empty()} if none found.
+     */
+    Optional<UserModel> findByUserId(Long userId);
+
+    /**
      * Retrieves an entity by its {@link UserModel#getPeerId()}.
      *
      * @param peerId may be null
-     * @return the entity with the given peerId or {@literal Optional#empty()} if none found or peerId is null
+     * @return the entity with the given peerId or {@literal Optional#empty()} if none found
      */
     Optional<UserModel> findByPeerId(Integer peerId);
 }
