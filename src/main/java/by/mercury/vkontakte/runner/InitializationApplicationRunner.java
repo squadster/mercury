@@ -1,4 +1,4 @@
-package by.mercury.vkontakte.job;
+package by.mercury.vkontakte.runner;
 
 import by.mercury.core.service.LoadUsersByConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * Job call's all services to initialize application
  */
 @Component
-public class InitializationJob implements ApplicationRunner, Ordered {
+public class InitializationApplicationRunner implements ApplicationRunner, Ordered {
 
     private static final int PRIORITY = Ordered.HIGHEST_PRECEDENCE;
 
