@@ -1,3 +1,4 @@
+![Build Status](https://travis-ci.org/squadster/mercury.svg?branch=master)
 # Mercury
 It's application for receiving and handling messages from student from university military departments.
 <br>
