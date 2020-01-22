@@ -47,3 +47,7 @@ jacocoTestReport {
         html.enabled = true
     }
 }
+
+task stage {
+    dependsOn build
+}
