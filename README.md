@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/squadster/mercury.svg?branch=master)](https://travis-ci.org/squadster/mercury)
 [![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/squadster/mercury.svg?maxAge=2592000)](https://codecov.io/github/squadster/mercury?branch=master)
+[![Known Vulnerabilities](https://snyk.io/test/github/squadster/mercury/badge.svg)](https://snyk.io/test/github/squadster/mercury)
 # Mercury
 It's application for receiving and handling messages from student from university military departments.
 <br>
@@ -12,7 +13,7 @@ git clone https://github.com/squadster/mercury.git
 ```
 2) Install [JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html) (use Java 11)
 3) Configure database in application.properties in src/main/java/resources
-4) Configure vkontakte tokens in tokens.properties in src/main/java/resources
+4) Configure vk tokens in tokens.properties in src/main/java/resources
 5) Run application
 ```bash
 ./gradlew bootRun
