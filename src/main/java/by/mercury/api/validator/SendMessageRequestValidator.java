@@ -1,6 +1,8 @@
 package by.mercury.api.validator;
 
 import by.mercury.api.request.SendMessageRequest;
+import by.mercury.core.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -24,11 +26,16 @@ public class SendMessageRequestValidator implements Validator {
 
     private static final String EMPTY_TEXT_ERROR = "sendMessageData.text.empty";
     private static final String EMPTY_TARGET_ERROR = "sendMessageData.target.empty";
+    private static final String INVALID_TARGET_ERROR = "sendMessageData.target.invalid";
 
     @Value("${sendMessageData.text.empty}")
     private String defaultEmptyTextMessage;
     @Value("${sendMessageData.target.empty}")
     private String defaultEmptyTargetMessage;
+    @Value("${sendMessageData.target.invalid}")
+    private String defaultInvalidTargetMessage;
+
+    private UserService userService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -51,6 +58,16 @@ public class SendMessageRequestValidator implements Validator {
     private void validateTarget(SendMessageRequest message, Errors errors) {
         if (Objects.isNull(message.getTarget())) {
             errors.rejectValue(TARGET_FIELD, EMPTY_TARGET_ERROR, defaultEmptyTargetMessage);
+        } else {
+            userService.findByUserId(message.getTarget())
+                    .ifPresentOrElse(user -> {
+                            },
+                            () -> errors.rejectValue(TARGET_FIELD, INVALID_TARGET_ERROR, defaultInvalidTargetMessage));
         }
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

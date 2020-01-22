@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
@@ -25,6 +26,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/message")
 public class SendMessageRestController {
+
+    private static final String ERROR_DELIMITER = ", ";
 
     private MessageFacade messageFacade;
 
@@ -58,8 +61,9 @@ public class SendMessageRestController {
 
     private ResponseEntity<SendMessageResponse> handleErrorsCase(Errors result) {
         String errors = result.getFieldErrors().stream()
-                .map(FieldError::toString)
-                .collect(Collectors.joining("\n"));
+                .map(FieldError::getRejectedValue)
+                .map(ObjectUtils::nullSafeToString)
+                .collect(Collectors.joining(ERROR_DELIMITER));
         SendMessageResponse response = SendMessageResponse.builder()
                 .successful(Boolean.FALSE)
                 .response(errors)

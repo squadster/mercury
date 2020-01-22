@@ -6,7 +6,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.Ordered;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
@@ -26,5 +28,12 @@ public class InitializationApplicationRunnerTest {
         testedInstance.run(args);
 
         verify(service).load();
+    }
+
+    @Test
+    public void shouldReturnMaxPriority() {
+        int actual = testedInstance.getOrder();
+
+        assertEquals(Ordered.HIGHEST_PRECEDENCE, actual);
     }
 }

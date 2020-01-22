@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/squadster/mercury.svg?branch=master)](https://travis-ci.org/squadster/mercury)
-[![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/squadster/mercury.svg?maxAge=2592000)](https://codecov.io/github/squadster/mercury?branch=master)
+[![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/squadster/mercury.svg)](https://codecov.io/github/squadster/mercury?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/squadster/mercury/badge.svg)](https://snyk.io/test/github/squadster/mercury)
 # Mercury
 It's application for receiving and handling messages from student from university military departments.
