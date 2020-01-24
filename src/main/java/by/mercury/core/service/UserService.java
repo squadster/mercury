@@ -32,7 +32,18 @@ public interface UserService {
      * Saves all given entities.
      *
      * @param users must not be {@literal null} nor must it contain {@literal null}.
+     * @return the saved entities; will never be {@literal null}.
+     * The returned {@literal Collection} will have the same size as the {@literal Collection} passed as an argument.
      * @throws IllegalArgumentException in case the given {@literal users} or one of its users is {@literal null}.
      */
-    void saveAll(Collection<UserModel> users);
+    Collection<UserModel> saveAll(Collection<UserModel> users);
+
+    /**
+     * Saves given entity.
+     *
+     * @param user must not be {@literal null}
+     * @return the saved entity; will never be {@literal null}.
+     * @throws IllegalArgumentException in case the given {@literal user}
+     */
+    UserModel save(UserModel user);
 }

@@ -5,11 +5,13 @@ import by.mercury.core.model.MessageModel;
 import by.mercury.core.model.UserModel;
 import by.mercury.core.service.CommandContextService;
 import by.mercury.core.service.UserService;
-import by.mercury.vkontakte.command.VkCommandContext;
+import by.mercury.vkontakte.context.VkCommandContext;
 import com.vk.api.sdk.objects.messages.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import java.util.HashMap;
 
 /**
  * Vkontakte implementation of {@link CommandContextService}
@@ -27,6 +29,7 @@ public class VkCommandContextService implements CommandContextService<Message> {
 
         return VkCommandContext.builder()
                 .message(createMessageModel(message))
+                .parameters(new HashMap<>())
                 .build();
     }
 

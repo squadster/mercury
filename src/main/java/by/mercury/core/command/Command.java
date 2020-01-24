@@ -5,7 +5,6 @@ package by.mercury.core.command;
  *
  * @author Yegor Ikbaev
  */
-@FunctionalInterface
 public interface Command {
 
     /**
@@ -14,4 +13,9 @@ public interface Command {
      * @param context must be not null
      */
     void execute(CommandContext context);
+
+    /**
+     * @return pattern of command for resolving
+     */
+    String getPattern();
 }

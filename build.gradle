@@ -55,7 +55,8 @@ jacocoTestReport {
                               '/by/mercury/core/model/*',
                               '/by/mercury/core/data/*',
                               '/by/mercury/api/request/*',
-                              '/by/mercury/api/response/*'
+                              '/by/mercury/api/response/*',
+                              '/by/mercury/vk/context/*'
                     ])
         }))
     }

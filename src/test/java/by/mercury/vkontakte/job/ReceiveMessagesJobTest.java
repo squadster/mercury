@@ -2,6 +2,7 @@ package by.mercury.vkontakte.job;
 
 import by.mercury.core.command.Command;
 import by.mercury.core.command.CommandContext;
+import by.mercury.core.command.CommandPreprocessor;
 import by.mercury.core.service.CommandContextService;
 import by.mercury.core.service.CommandService;
 import by.mercury.core.service.MessageReceiveService;
@@ -30,6 +31,8 @@ public class ReceiveMessagesJobTest {
     private CommandContextService<Message> commandContextService;
     @Mock
     private CommandService commandService;
+    @Mock
+    private CommandPreprocessor preprocessor;
 
     @Mock
     private Message message;

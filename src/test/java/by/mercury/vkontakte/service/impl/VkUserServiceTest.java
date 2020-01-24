@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -73,9 +74,16 @@ public class VkUserServiceTest {
     }
 
     @Test
-    public void shouldCallDaoMethod() {
-        testedInstance.saveAll(Collections.emptyList());
+    public void shouldCallSaveAllDaoMethod() {
+        testedInstance.saveAll(Collections.singleton(existedUser));
 
-        verify(userDao).saveAll(Collections.emptyList());
+        verify(userDao).saveAll(Collections.singleton(existedUser));
+    }
+
+    @Test
+    public void shouldCallSaveDaoMethod() {
+        testedInstance.save(existedUser);
+
+        verify(userDao).save(eq(existedUser));
     }
 }
