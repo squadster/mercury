@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Describes users
@@ -22,6 +23,7 @@ import javax.persistence.Id;
 @EqualsAndHashCode(of = {"id"})
 @Builder
 @Entity
+@Table(name = "users")
 public class UserModel {
 
     @Id
