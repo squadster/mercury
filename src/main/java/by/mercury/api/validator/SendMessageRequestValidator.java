@@ -59,7 +59,7 @@ public class SendMessageRequestValidator implements Validator {
         if (Objects.isNull(message.getTarget())) {
             errors.rejectValue(TARGET_FIELD, EMPTY_TARGET_ERROR, defaultEmptyTargetMessage);
         } else {
-            userService.findByUserId(message.getTarget())
+            userService.findById(message.getTarget())
                     .ifPresentOrElse(user -> {
                             },
                             () -> errors.rejectValue(TARGET_FIELD, INVALID_TARGET_ERROR, defaultInvalidTargetMessage));

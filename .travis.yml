@@ -11,4 +11,17 @@ script:
 after_success:
   - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
   - bash <(curl -s https://codecov.io/bash)
-  - ./scripts/build.sh
+
+stages:
+  - test
+  - name: build
+    if: branch = release
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - echo "Skip tests"
+    - stage: build
+      script: ./scripts/build.sh
+      

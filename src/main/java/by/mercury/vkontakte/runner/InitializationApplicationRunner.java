@@ -2,6 +2,7 @@ package by.mercury.vkontakte.runner;
 
 import by.mercury.core.service.LoadUsersByConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
@@ -15,6 +16,8 @@ public class InitializationApplicationRunner implements ApplicationRunner, Order
 
     private static final int PRIORITY = Ordered.HIGHEST_PRECEDENCE;
 
+    private boolean runAutoloadingUsers;
+    
     private LoadUsersByConversationService loadUsersByConversationService;
 
     /**
@@ -24,7 +27,9 @@ public class InitializationApplicationRunner implements ApplicationRunner, Order
      */
     @Override
     public void run(ApplicationArguments args) {
-        loadUsersByConversationService.load();
+        if (runAutoloadingUsers) {
+            loadUsersByConversationService.load();
+        }
     }
 
     /**
@@ -37,6 +42,11 @@ public class InitializationApplicationRunner implements ApplicationRunner, Order
     @Override
     public int getOrder() {
         return PRIORITY;
+    }
+
+    @Value("${run.autoloading.users}")
+    public void setRunAutoloadingUsers(boolean runAutoloadingUsers) {
+        this.runAutoloadingUsers = runAutoloadingUsers;
     }
 
     @Autowired

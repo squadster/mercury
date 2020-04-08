@@ -1,6 +1,7 @@
 package by.mercury.vkontakte.runner;
 
 import by.mercury.core.service.LoadUsersByConversationService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -22,6 +23,11 @@ public class InitializationApplicationRunnerTest {
 
     @Mock
     private ApplicationArguments args;
+    
+    @BeforeEach
+    public void setUp() {
+        testedInstance.setRunAutoloadingUsers(Boolean.TRUE);
+    }
 
     @Test
     public void shouldCallServiceMethod() {

@@ -30,7 +30,7 @@ public class SendMessageRequestConverter implements Converter<SendMessageRequest
      */
     @Override
     public MessageData convert(SendMessageRequest source) {
-        UserData target = userService.findByUserId(source.getTarget())
+        UserData target = userService.findById(source.getTarget())
                 .map(converter::convert)
                 .orElseThrow(IllegalArgumentException::new);
         return MessageData.builder()

@@ -24,8 +24,6 @@ public class RegistrationPreprocessor implements CommandPreprocessor {
         if (isRegistered(author)) {
             context.getParameters().putIfAbsent(IS_FIRST_MESSAGE, Boolean.FALSE);
         } else {
-            //TODO replace userId of id from API
-            author.setUserId(author.getPeerId().longValue());
             context.getMessage().setAuthor(userService.save(author));
             context.getParameters().putIfAbsent(IS_FIRST_MESSAGE, Boolean.TRUE);
         }

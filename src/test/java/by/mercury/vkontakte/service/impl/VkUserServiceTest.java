@@ -37,13 +37,13 @@ public class VkUserServiceTest {
     public void setUp() {
         when(userDao.findByPeerId(EXISTED_PEER_ID)).thenReturn(Optional.of(existedUser));
         when(userDao.findByPeerId(NOT_EXISTED_PEER_ID)).thenReturn(Optional.empty());
-        when(userDao.findByUserId(EXISTED_USER_ID)).thenReturn(Optional.of(existedUser));
-        when(userDao.findByUserId(NOT_EXISTED_USER_ID)).thenReturn(Optional.empty());
+        when(userDao.findById(EXISTED_USER_ID)).thenReturn(Optional.of(existedUser));
+        when(userDao.findById(NOT_EXISTED_USER_ID)).thenReturn(Optional.empty());
     }
 
     @Test
     public void shouldReturnExistedUserIfUserIdPresent() {
-        Optional<UserModel> actual = testedInstance.findByUserId(EXISTED_USER_ID);
+        Optional<UserModel> actual = testedInstance.findById(EXISTED_USER_ID);
 
         Optional<UserModel> expected = Optional.of(existedUser);
         assertEquals(expected, actual);
@@ -51,7 +51,7 @@ public class VkUserServiceTest {
 
     @Test
     public void shouldReturnEmptyUserIfUserIdNotPresent() {
-        Optional<UserModel> actual = testedInstance.findByUserId(NOT_EXISTED_USER_ID);
+        Optional<UserModel> actual = testedInstance.findById(NOT_EXISTED_USER_ID);
 
         Optional<UserModel> expected = Optional.empty();
         assertEquals(expected, actual);

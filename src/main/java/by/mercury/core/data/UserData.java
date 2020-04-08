@@ -21,6 +21,4 @@ public class UserData {
     private Long id;
 
     private Integer peerId;
-
-    private Long userId;
 }

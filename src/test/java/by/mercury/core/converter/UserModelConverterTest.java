@@ -27,7 +27,6 @@ public class UserModelConverterTest {
         testedInstance = new UserModelConverter();
         when(source.getId()).thenReturn(ID);
         when(source.getPeerId()).thenReturn(PEER_ID);
-        when(source.getUserId()).thenReturn(USER_ID);
     }
 
     @Test
@@ -36,6 +35,5 @@ public class UserModelConverterTest {
 
         assertEquals(ID, actual.getId());
         assertEquals(PEER_ID, actual.getPeerId());
-        assertEquals(USER_ID, actual.getUserId());
     }
 }

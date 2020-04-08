@@ -26,7 +26,6 @@ public class VkMessageFacade implements MessageFacade {
         Assert.notNull(message, "Message must not be null");
         Assert.hasText(message.getText(), "Text must not be null or empty");
         Assert.notNull(message.getTarget(), "Target user must not be null");
-        Assert.notNull(message.getTarget().getUserId(), "Target user must not be null");
 
         messageService.send(converter.convert(message));
     }

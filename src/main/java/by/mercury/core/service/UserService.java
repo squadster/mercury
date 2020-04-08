@@ -13,12 +13,12 @@ import java.util.Optional;
 public interface UserService {
 
     /**
-     * Retrieves an entity by its {@link UserModel#getUserId()}.
+     * Retrieves an entity by its {@link UserModel#getId()} ()}.
      *
      * @param userId may be null
      * @return the entity with the given userId or {@literal Optional#empty()} if none found.
      */
-    Optional<UserModel> findByUserId(Long userId);
+    Optional<UserModel> findById(Long userId);
 
     /**
      * Retrieves an entity by its {@link UserModel#getPeerId()}.

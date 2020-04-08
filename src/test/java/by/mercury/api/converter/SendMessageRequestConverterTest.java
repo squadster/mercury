@@ -45,8 +45,8 @@ public class SendMessageRequestConverterTest {
 
     @BeforeEach
     public void setUp() {
-        when(userService.findByUserId(VALID_TARGET)).thenReturn(Optional.of(targetModel));
-        when(userService.findByUserId(INVALID_TARGET)).thenReturn(Optional.empty());
+        when(userService.findById(VALID_TARGET)).thenReturn(Optional.of(targetModel));
+        when(userService.findById(INVALID_TARGET)).thenReturn(Optional.empty());
         when(converter.convert(targetModel)).thenReturn(target);
         when(source.getText()).thenReturn(TEXT);
     }
