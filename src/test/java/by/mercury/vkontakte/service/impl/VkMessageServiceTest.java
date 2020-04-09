@@ -1,45 +1,43 @@
 package by.mercury.vkontakte.service.impl;
 
+import by.mercury.core.data.MessageType;
 import by.mercury.core.exception.SendMessageException;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.model.UserModel;
-import com.vk.api.sdk.actions.Messages;
-import com.vk.api.sdk.client.VkApiClient;
-import com.vk.api.sdk.client.actors.GroupActor;
-import com.vk.api.sdk.exceptions.ApiException;
-import com.vk.api.sdk.exceptions.ClientException;
-import com.vk.api.sdk.queries.messages.MessagesSendQuery;
+import by.mercury.core.strategy.SendMessageStrategy;
+import by.mercury.vkontakte.strategy.impl.TextSendMessageStrategy;
+import by.mercury.vkontakte.strategy.impl.VoiceSendMessageStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class VkMessageServiceTest {
 
     private static final String EXCEPTION_MESSAGE = "message";
     private static final String MESSAGE_TEXT = "text";
+    
+    private VkMessageService testedInstance = new VkMessageService();
 
-    @InjectMocks
-    private VkMessageService testedInstance;
-
+    private Map<MessageType, SendMessageStrategy> sendMessageStrategies;
+    
     @Mock
-    private VkApiClient vkApiClient;
+    private TextSendMessageStrategy textSendMessageStrategy;
+    
     @Mock
-    private GroupActor vkGroupActor;
-    @Mock
-    private Messages messages;
-    @Mock
-    private MessagesSendQuery query;
-
+    private VoiceSendMessageStrategy voiceSendMessageStrategy; 
+    
     @Mock
     private MessageModel message;
 
@@ -48,26 +46,28 @@ public class VkMessageServiceTest {
 
     @BeforeEach
     public void setUp() {
-        when(vkApiClient.messages()).thenReturn(messages);
-        when(messages.send(eq(vkGroupActor))).thenReturn(query);
-        when(query.peerId(anyInt())).thenReturn(query);
-        when(query.message(MESSAGE_TEXT)).thenReturn(query);
-        when(query.randomId(anyInt())).thenReturn(query);
+        sendMessageStrategies = Map.of(MessageType.TEXT, textSendMessageStrategy, 
+                MessageType.VOICE, voiceSendMessageStrategy);
+        testedInstance.setSendMessageStrategies(sendMessageStrategies);
         when(message.getTarget()).thenReturn(target);
         when(message.getText()).thenReturn(MESSAGE_TEXT);
     }
 
     @Test
-    public void shouldSendMessageIfPresent() throws ClientException, ApiException {
-        when(query.execute()).thenReturn(null);
+    public void shouldSendMessageIfPresent() {
+        when(message.getTypes()).thenReturn(Arrays.asList(MessageType.TEXT, MessageType.VOICE));
 
         assertDoesNotThrow(() -> testedInstance.send(message));
+        verify(textSendMessageStrategy).send(eq(message));
+        verify(voiceSendMessageStrategy).send(eq(message));
     }
 
     @Test
-    public void shouldThrowExceptionIfNotPresent() throws ClientException, ApiException {
-        when(query.execute()).thenThrow(new ClientException(EXCEPTION_MESSAGE));
-
+    public void shouldThrowExceptionIfNotPresent() {
+        when(message.getTypes()).thenReturn(Collections.singleton(MessageType.TEXT));
+        doThrow(new SendMessageException(EXCEPTION_MESSAGE, new IllegalArgumentException()))
+                .when(textSendMessageStrategy).send(eq(message));
+        
         SendMessageException actual = assertThrows(SendMessageException.class, () -> testedInstance.send(message));
 
         assertEquals(EXCEPTION_MESSAGE, actual.getMessage());
