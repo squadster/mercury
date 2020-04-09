@@ -29,6 +29,7 @@ public class MessageDataConverter implements Converter<MessageData, MessageModel
         return MessageModel.builder()
                 .text(source.getText())
                 .target(userDataConverter.convert(source.getTarget()))
+                .types(source.getTypes())
                 .build();
     }
 

@@ -1,9 +1,12 @@
 package by.mercury.core.model;
 
+import by.mercury.core.data.MessageType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Collection;
 
 /**
  * Describes messages
@@ -21,4 +24,6 @@ public class MessageModel {
     private UserModel author;
 
     private UserModel target;
+    
+    private Collection<MessageType> types;
 }

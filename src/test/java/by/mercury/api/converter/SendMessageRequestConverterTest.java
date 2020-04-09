@@ -2,6 +2,7 @@ package by.mercury.api.converter;
 
 import by.mercury.api.request.SendMessageRequest;
 import by.mercury.core.data.MessageData;
+import by.mercury.core.data.MessageType;
 import by.mercury.core.data.UserData;
 import by.mercury.core.model.UserModel;
 import by.mercury.core.service.UserService;
@@ -12,6 +13,8 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.convert.converter.Converter;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,12 +46,15 @@ public class SendMessageRequestConverterTest {
     @Mock
     private UserData target;
 
+    private Collection<MessageType> types = Collections.singleton(MessageType.TEXT);
+
     @BeforeEach
     public void setUp() {
         when(userService.findById(VALID_TARGET)).thenReturn(Optional.of(targetModel));
         when(userService.findById(INVALID_TARGET)).thenReturn(Optional.empty());
         when(converter.convert(targetModel)).thenReturn(target);
         when(source.getText()).thenReturn(TEXT);
+        when(source.getTypes()).thenReturn(Collections.singleton(MessageType.TEXT.getCode()));
     }
 
     @Test
@@ -59,6 +65,7 @@ public class SendMessageRequestConverterTest {
 
         assertEquals(TEXT, actual.getText());
         assertEquals(target, actual.getTarget());
+        assertEquals(types, actual.getTypes());
     }
 
     @Test

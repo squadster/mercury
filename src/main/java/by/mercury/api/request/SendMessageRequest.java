@@ -3,6 +3,8 @@ package by.mercury.api.request;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+
 /**
  * Describes information of request in {@link by.mercury.api.controller.SendMessageRestController}
  *
@@ -15,4 +17,6 @@ public class SendMessageRequest {
     private String text;
 
     private Long target;
+    
+    private Collection<String> types;
 }

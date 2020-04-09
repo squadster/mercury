@@ -2,12 +2,18 @@ package by.mercury.api.converter;
 
 import by.mercury.api.request.SendMessageRequest;
 import by.mercury.core.data.MessageData;
+import by.mercury.core.data.MessageType;
 import by.mercury.core.data.UserData;
 import by.mercury.core.model.UserModel;
 import by.mercury.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * A converter converts a source object of type {@link SendMessageRequest} to a target of type {@link MessageData}
@@ -36,7 +42,16 @@ public class SendMessageRequestConverter implements Converter<SendMessageRequest
         return MessageData.builder()
                 .text(source.getText())
                 .target(target)
+                .types(convert(source.getTypes()))
                 .build();
+    }
+    
+    private Collection<MessageType> convert(Collection<String> types) {
+        return Optional.ofNullable(types).stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .map(MessageType::toMessageType)
+                .collect(Collectors.toSet());
     }
 
     @Autowired

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+
 /**
  * DTO class for {@link by.mercury.core.model.MessageModel}
  *
@@ -21,4 +23,6 @@ public class MessageData {
     private UserData author;
 
     private UserData target;
+    
+    private Collection<MessageType> types;
 }
