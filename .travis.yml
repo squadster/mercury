@@ -8,10 +8,6 @@ jdk: oraclejdk11
 script:
   - ./gradlew build --scan -s
 
-after_success:
-  - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
-  - bash <(curl -s https://codecov.io/bash)
-
 stages:
   - test
   - name: build
@@ -20,8 +16,7 @@ stages:
 jobs:
   include:
     - stage: test
-      script:
-        - echo "Skip tests"
+      script: ./scripts/generateJaCoCoReport.sh
     - stage: build
       script: ./scripts/build.sh
       
