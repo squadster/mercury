@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.1.RELEASE")
@@ -19,9 +20,11 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 test {
+    jvmArgs "--add-opens=java.base/jdk.internal.loader=ALL-UNNAMED"
     useJUnitPlatform()
 }
 
@@ -50,6 +53,12 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
 
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.9'
+
+    compile (group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: '5.2') {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+    }
 }
 
 jacocoTestReport {

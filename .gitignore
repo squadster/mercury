@@ -1,6 +1,7 @@
 /.idea/
 /out/
 /target
+/log/
 
 gradle-app.setting
 .gradletasknamecache
