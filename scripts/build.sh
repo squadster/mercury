@@ -1,4 +1,7 @@
 
+echo "Starting generating property file"
+./gradlew generatePropertyFile
+echo "End of generating property file"
 echo "Starting building"
 ./gradlew bootJar
 echo "End of building"

@@ -83,3 +83,6 @@ jacocoTestReport {
 task stage {
     dependsOn build
 }
+
+task generatePropertyFile(type : PropertyFileGenerator) {
+}
