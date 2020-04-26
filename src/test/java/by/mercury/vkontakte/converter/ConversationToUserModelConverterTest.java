@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class ConversationToUserModelModelConverterTest {
+public class ConversationToUserModelConverterTest {
 
     private static final Integer PEER_ID = 0;
 
-    private ConversationToUserModelModelConverter testedInstance;
+    private ConversationToUserModelConverter testedInstance;
 
     @Mock
     private ConversationWithMessage source;
@@ -30,7 +30,7 @@ public class ConversationToUserModelModelConverterTest {
 
     @BeforeEach
     public void setUp() {
-        testedInstance = new ConversationToUserModelModelConverter();
+        testedInstance = new ConversationToUserModelConverter();
         when(source.getConversation()).thenReturn(conversation);
         when(conversation.getPeer()).thenReturn(conversationPeer);
         when(conversationPeer.getId()).thenReturn(PEER_ID);

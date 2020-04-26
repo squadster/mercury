@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * A converter converts a source object of type {@link ConversationWithMessage} to a target of type {@link UserModel}
  */
 @Component
-public class ConversationToUserModelModelConverter implements Converter<ConversationWithMessage, UserModel> {
+public class ConversationToUserModelConverter implements Converter<ConversationWithMessage, UserModel> {
 
     /**
      * Convert the source object of type {@link ConversationWithMessage} to target type {{@link UserModel}
@@ -23,6 +23,7 @@ public class ConversationToUserModelModelConverter implements Converter<Conversa
     public UserModel convert(ConversationWithMessage source) {
         return UserModel.builder()
                 .peerId(source.getConversation().getPeer().getId())
+                .uid(source.getConversation().getPeer().getId().toString())
                 .build();
     }
 }

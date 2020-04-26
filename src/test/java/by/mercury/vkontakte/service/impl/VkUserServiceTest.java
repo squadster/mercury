@@ -35,8 +35,8 @@ public class VkUserServiceTest {
 
     @BeforeEach
     public void setUp() {
-        when(userDao.findByPeerId(EXISTED_PEER_ID)).thenReturn(Optional.of(existedUser));
-        when(userDao.findByPeerId(NOT_EXISTED_PEER_ID)).thenReturn(Optional.empty());
+        when(userDao.findByUid(eq(EXISTED_PEER_ID.toString()))).thenReturn(Optional.of(existedUser));
+        when(userDao.findByUid(eq(NOT_EXISTED_PEER_ID.toString()))).thenReturn(Optional.empty());
         when(userDao.findById(EXISTED_USER_ID)).thenReturn(Optional.of(existedUser));
         when(userDao.findById(NOT_EXISTED_USER_ID)).thenReturn(Optional.empty());
     }

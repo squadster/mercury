@@ -18,5 +18,5 @@ public interface UserDao extends CrudRepository<UserModel, Long> {
      * @param peerId may be null
      * @return the entity with the given peerId or {@literal Optional#empty()} if none found
      */
-    Optional<UserModel> findByPeerId(Integer peerId);
+    Optional<UserModel> findByUid(String peerId);
 }

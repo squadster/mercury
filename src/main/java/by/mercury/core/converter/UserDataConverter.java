@@ -24,6 +24,7 @@ public class UserDataConverter implements Converter<UserData, UserModel> {
         return UserModel.builder()
                 .id(source.getId())
                 .peerId(source.getPeerId())
+                .uid(source.getPeerId().toString())
                 .build();
     }
 }

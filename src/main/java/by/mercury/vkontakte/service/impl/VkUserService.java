@@ -27,7 +27,7 @@ public class VkUserService implements UserService {
 
     @Override
     public Optional<UserModel> findByPeerId(Integer peerId) {
-        return userDao.findByPeerId(peerId);
+        return userDao.findByUid(peerId.toString());
     }
 
     @Override

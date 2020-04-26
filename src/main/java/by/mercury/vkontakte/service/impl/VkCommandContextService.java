@@ -43,7 +43,7 @@ public class VkCommandContextService implements CommandContextService<Message> {
     private UserModel gerOrCreateAuthor(Message message) {
         Integer peerId = message.getPeerId();
         return userService.findByPeerId(peerId)
-                .orElseGet(() -> UserModel.builder().peerId(peerId).build());
+                .orElseGet(() -> UserModel.builder().peerId(peerId).uid(peerId.toString()).build());
     }
 
     @Autowired
