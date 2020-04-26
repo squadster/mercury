@@ -1,6 +1,5 @@
 package by.mercury.vkontakte.service.impl;
 
-import by.mercury.core.command.CommandContext;
 import by.mercury.core.model.UserModel;
 import by.mercury.core.service.UserService;
 import com.vk.api.sdk.objects.messages.Message;
@@ -44,7 +43,7 @@ public class VkCommandContextServiceTest {
 
     @Test
     public void shouldReturnCommandContextIfPresent() {
-        CommandContext actual = testedInstance.build(message);
+        var actual = testedInstance.build(message);
 
         assertEquals(MESSAGE_TEXT, actual.getMessage().getText());
         assertEquals(user, actual.getMessage().getAuthor());

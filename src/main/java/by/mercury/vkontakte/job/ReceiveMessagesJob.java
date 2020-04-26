@@ -7,6 +7,7 @@ import by.mercury.core.service.CommandContextService;
 import by.mercury.core.service.CommandService;
 import by.mercury.core.service.MessageReceiveService;
 import com.vk.api.sdk.objects.messages.Message;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  *
  * @author Yegor Ikbaev
  */
+@Slf4j
 @Component
 public class ReceiveMessagesJob implements Job {
 
@@ -42,12 +44,20 @@ public class ReceiveMessagesJob implements Job {
     }
 
     private CommandContext preprocess(CommandContext context) {
-        preprocessors.forEach(preprocessor -> preprocessor.preprocess(context));
+        try {
+            preprocessors.forEach(preprocessor -> preprocessor.preprocess(context));
+        } catch (IllegalStateException exception) {
+            log.warn(exception.getMessage());
+        }
         return context;
     }
 
     private void executeCommand(CommandContext context) {
-        commandService.resolve(context).execute(context);
+        try {
+            commandService.resolve(context).execute(context);
+        } catch (IllegalStateException exception) {
+            log.warn(exception.getMessage());
+        }
     }
 
     @Autowired
