@@ -3,6 +3,7 @@ package by.mercury.vkontakte.strategy.impl;
 import by.mercury.core.exception.SendMessageException;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.model.UserModel;
+import by.mercury.core.service.SynthesizeSpeechService;
 import com.vk.api.sdk.actions.Docs;
 import com.vk.api.sdk.actions.Messages;
 import com.vk.api.sdk.actions.Upload;
@@ -19,8 +20,6 @@ import com.vk.api.sdk.queries.docs.DocsGetMessagesUploadServerQuery;
 import com.vk.api.sdk.queries.docs.DocsSaveQuery;
 import com.vk.api.sdk.queries.messages.MessagesSendQuery;
 import com.vk.api.sdk.queries.upload.UploadDocQuery;
-import marytts.LocalMaryInterface;
-import marytts.exceptions.MaryConfigurationException;
 import org.apache.commons.lang.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +27,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -50,6 +51,8 @@ public class VoiceSendMessageStrategyTest {
     @InjectMocks
     private VoiceSendMessageStrategy testedInstance;
 
+    @Mock
+    private SynthesizeSpeechService synthesizeSpeechService;
     @Mock
     private VkApiClient vkApiClient;
     @Mock
@@ -85,13 +88,17 @@ public class VoiceSendMessageStrategyTest {
     @Mock
     private UserModel target;
 
+    private File audioFile;
+
     private URL uploadUrl;
 
     @BeforeEach
-    public void setUp() throws MaryConfigurationException, ClientException, ApiException, MalformedURLException {
+    public void setUp() throws ClientException, ApiException, IOException {
         uploadUrl = URI.create(UPLOAD_URL).toURL();
-        testedInstance.setLocalMaryInterface(new LocalMaryInterface());
 
+        audioFile = File.createTempFile("prefix", "suffix");
+        when(synthesizeSpeechService.synthesize(eq(message))).thenReturn(audioFile);
+        
         when(vkApiClient.upload()).thenReturn(upload);
         when(vkApiClient.messages()).thenReturn(messages);
 

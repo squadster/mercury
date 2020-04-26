@@ -59,6 +59,11 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         exclude group: 'org.slf4j', module: 'slf4j-api'
     }
+
+    implementation platform('software.amazon.awssdk:bom:2.13.3')
+    implementation 'software.amazon.awssdk:polly'
+
+    testImplementation 'org.mockito:mockito-inline:3.3.3'
 }
 
 jacocoTestReport {
@@ -72,9 +77,11 @@ jacocoTestReport {
                     exclude: ['/by/mercury/Application',
                               '/by/mercury/core/model/*',
                               '/by/mercury/core/data/*',
+                              '/by/mercury/core/configuration/*',
                               '/by/mercury/api/request/*',
                               '/by/mercury/api/response/*',
-                              '/by/mercury/vk/context/*'
+                              '/by/mercury/vk/context/*',
+                              '/by/mercury/vk/configuration/*'
                     ])
         }))
     }
