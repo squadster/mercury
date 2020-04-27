@@ -5,11 +5,13 @@ import by.mercury.core.model.MessageModel;
 import java.io.File;
 
 /**
- * Strategy for synthesize voice messages.
+ * Service for working with voice messages.
  *
  * @author Yegor Ikbaev
  */
-public interface SynthesizeSpeechService {
+public interface SpeechService {
     
     File synthesize(MessageModel message);
+
+    String recognize(File audio);
 }

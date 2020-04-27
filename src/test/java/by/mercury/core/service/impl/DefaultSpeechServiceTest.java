@@ -11,10 +11,10 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class DefaultSynthesizeSpeechServiceTest {
+public class DefaultSpeechServiceTest {
     
     @InjectMocks
-    private DefaultSynthesizeSpeechService testedInstance;
+    private DefaultSpeechService testedInstance;
 
     @Mock
     private SynthesizeSpeechStrategy synthesizeSpeechStrategy;

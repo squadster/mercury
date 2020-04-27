@@ -30,7 +30,7 @@ public class AudioMessagePreprocessor implements CommandPreprocessor {
 
     private static final int BUFFER_SIZE = 8 * 1024;
     private static final int END_DOWNLOADING_POSITION = -1;
-    private static final String MP3_EXTENSION = "mp3";
+    private static final String MP3_EXTENSION = ".mp3";
     private static final String FILE_PREFIX_FORMAT = "id_%d_";
     
     @Override

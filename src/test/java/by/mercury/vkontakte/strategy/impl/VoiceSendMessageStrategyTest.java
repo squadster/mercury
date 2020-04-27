@@ -3,7 +3,7 @@ package by.mercury.vkontakte.strategy.impl;
 import by.mercury.core.exception.SendMessageException;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.model.UserModel;
-import by.mercury.core.service.SynthesizeSpeechService;
+import by.mercury.core.service.SpeechService;
 import com.vk.api.sdk.actions.Docs;
 import com.vk.api.sdk.actions.Messages;
 import com.vk.api.sdk.actions.Upload;
@@ -29,7 +29,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
@@ -52,7 +51,7 @@ public class VoiceSendMessageStrategyTest {
     private VoiceSendMessageStrategy testedInstance;
 
     @Mock
-    private SynthesizeSpeechService synthesizeSpeechService;
+    private SpeechService speechService;
     @Mock
     private VkApiClient vkApiClient;
     @Mock
@@ -97,7 +96,7 @@ public class VoiceSendMessageStrategyTest {
         uploadUrl = URI.create(UPLOAD_URL).toURL();
 
         audioFile = File.createTempFile("prefix", "suffix");
-        when(synthesizeSpeechService.synthesize(eq(message))).thenReturn(audioFile);
+        when(speechService.synthesize(eq(message))).thenReturn(audioFile);
         
         when(vkApiClient.upload()).thenReturn(upload);
         when(vkApiClient.messages()).thenReturn(messages);

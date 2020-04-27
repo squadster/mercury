@@ -34,7 +34,7 @@ public class ReceiveMessagesJob implements Job {
 
     private CommandService commandService;
 
-    @Scheduled(initialDelay = 1000, fixedDelay = 10000)
+    @Scheduled(initialDelay = 1000, fixedDelay = 2000)
     @Override
     public void execute() {
         messageReceiveService.receiveAll().stream()
