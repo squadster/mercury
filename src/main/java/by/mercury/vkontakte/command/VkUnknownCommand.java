@@ -2,29 +2,45 @@ package by.mercury.vkontakte.command;
 
 import by.mercury.core.command.Command;
 import by.mercury.core.command.CommandContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import by.mercury.core.data.MessageType;
+import by.mercury.core.model.MessageModel;
+import by.mercury.core.service.MessageService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Collections;
 
 /**
  * Vk test implementation of {@link Command}
  *
  * @author Yegor Ikbaev
  */
+@Slf4j
 @Component
 public class VkUnknownCommand implements Command {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(VkUnknownCommand.class.getName());
-    private static final String COMMAND_PATTERN = "";
+    
+    private MessageService messageService;
 
     @Override
-    public void execute(CommandContext context) {
-        LOGGER.info(context.getMessage().getText());
-        LOGGER.info(context.getMessage().getAuthor().getPeerId().toString());
+    public boolean support(CommandContext context) {
+        return false;
     }
 
     @Override
-    public String getPattern() {
-        return COMMAND_PATTERN;
+    public void execute(CommandContext context) {
+        var source = context.getMessage();
+        log.info("Did not recognize message: {}, from {}", source.getText(), source.getAuthor().getPeerId());
+        var message = MessageModel.builder()
+                .target(source.getAuthor())
+                .text("Не удалось распознать сообщение")
+                .types(Collections.singletonList(MessageType.VOICE))
+                .build();
+        messageService.send(message);
+    }
+    
+    @Autowired
+    public void setMessageService(MessageService messageService) {
+        this.messageService = messageService;
     }
 }

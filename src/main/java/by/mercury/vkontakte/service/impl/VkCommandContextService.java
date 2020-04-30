@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Vkontakte implementation of {@link CommandContextService}
@@ -20,6 +21,8 @@ import java.util.HashMap;
  */
 @Service
 public class VkCommandContextService implements CommandContextService<Message> {
+    
+    public static final String VK_MESSAGE = "vkMessage";
 
     private UserService userService;
 
@@ -29,7 +32,7 @@ public class VkCommandContextService implements CommandContextService<Message> {
 
         return VkCommandContext.builder()
                 .message(createMessageModel(message))
-                .parameters(new HashMap<>())
+                .parameters(parameters(message))
                 .build();
     }
 
@@ -41,10 +44,16 @@ public class VkCommandContextService implements CommandContextService<Message> {
     }
 
     private UserModel gerOrCreateAuthor(Message message) {
-        Integer peerId = message.getPeerId();
+        var peerId = message.getPeerId();
         return userService.findByPeerId(peerId)
                 .orElseGet(() -> UserModel.builder().peerId(peerId).uid(peerId.toString()).build());
     }
+    
+    private Map<String, Object> parameters(Message message) {
+        var map = new HashMap<String, Object>();
+        map.put(VK_MESSAGE, message);
+        return map;
+    } 
 
     @Autowired
     public void setUserService(UserService userService) {

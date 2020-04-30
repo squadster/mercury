@@ -7,16 +7,19 @@ import by.mercury.core.strategy.SendMessageStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class VkMessageService implements MessageService {
-    
+
     private Map<MessageType, SendMessageStrategy> sendMessageStrategies;
-    
+
     @Override
     public void send(MessageModel message) {
-        message.getTypes().stream()
+        Optional.ofNullable(message.getTypes()).stream()
+                .flatMap(Collection::stream)
                 .map(sendMessageStrategies::get)
                 .forEach(strategy -> strategy.send(message));
     }

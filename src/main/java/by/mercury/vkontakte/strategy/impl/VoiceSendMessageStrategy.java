@@ -2,7 +2,7 @@ package by.mercury.vkontakte.strategy.impl;
 
 import by.mercury.core.exception.SendMessageException;
 import by.mercury.core.model.MessageModel;
-import by.mercury.core.service.SynthesizeSpeechService;
+import by.mercury.core.service.SpeechService;
 import by.mercury.core.strategy.SendMessageStrategy;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
@@ -34,7 +34,7 @@ public class VoiceSendMessageStrategy implements SendMessageStrategy {
     private static final Random RANDOM = new SecureRandom();
     private static final String AUDIO_MESSAGE_FORMAT = "doc%d_%d";
     
-    private SynthesizeSpeechService synthesizeSpeechService;
+    private SpeechService speechService;
     
     private VkApiClient vkApiClient;
 
@@ -43,7 +43,7 @@ public class VoiceSendMessageStrategy implements SendMessageStrategy {
     @Override
     public void send(MessageModel message) {
         try {
-            var audioMessage = synthesizeSpeechService.synthesize(message);
+            var audioMessage = speechService.synthesize(message);
             LOGGER.debug("Created message: text = {}, file={}", message.getText(), audioMessage.getName());
             sendMessage(message, uploadFile(message, audioMessage));
             LOGGER.debug("Is file {} deleted:{}", audioMessage.getName(), deleteIfExists(audioMessage.toPath()));
@@ -86,8 +86,8 @@ public class VoiceSendMessageStrategy implements SendMessageStrategy {
     }
     
     @Autowired
-    public void setSynthesizeSpeechService(SynthesizeSpeechService synthesizeSpeechService) {
-        this.synthesizeSpeechService = synthesizeSpeechService;
+    public void setSpeechService(SpeechService speechService) {
+        this.speechService = speechService;
     }
 
     @Autowired
