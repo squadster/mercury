@@ -57,6 +57,7 @@ public class ReceiveMessagesJob implements Job {
             commandService.resolve(context).execute(context);
         } catch (Exception exception) {
             log.warn(exception.getMessage());
+            exception.printStackTrace();
             try {
                 commandService.getCommandOnError().execute(context);
             } catch (Exception e) {
