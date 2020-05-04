@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @Service
 public class VkMessageService implements MessageService {
@@ -18,8 +20,10 @@ public class VkMessageService implements MessageService {
 
     @Override
     public void send(MessageModel message) {
-        Optional.ofNullable(message.getTypes()).stream()
-                .flatMap(Collection::stream)
+        Optional.ofNullable(message.getTypes())
+                .filter(Predicate.not(Collection::isEmpty))
+                .orElseGet(() -> Collections.singletonList(MessageType.TEXT))
+                .stream()
                 .map(sendMessageStrategies::get)
                 .forEach(strategy -> strategy.send(message));
     }
