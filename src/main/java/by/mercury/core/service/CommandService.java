@@ -17,4 +17,6 @@ public interface CommandService {
      * @return the implementation of {@link Command}
      */
     Command resolve(CommandContext context);
+    
+    Command getCommandOnError();
 }

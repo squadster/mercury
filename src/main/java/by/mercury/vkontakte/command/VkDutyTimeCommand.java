@@ -21,6 +21,7 @@ import java.util.List;
 @Component
 public class VkDutyTimeCommand implements Command {
 
+    private static final String CURRENT_WEEK_MESSAGE = "Вы дежурный на этой недели";
     private static final String MESSAGE_FORMAT = "Вы дежурный через %d недели";
     private final List<String> keyWords = Arrays.asList("duty", "vigil", "daily", "order", "dude");
 
@@ -49,7 +50,11 @@ public class VkDutyTimeCommand implements Command {
 
     private String dutyTimeText(UserModel user) {
         var queue = restTemplate.getForObject(apiUrl + user.getPeerId(), QueueNumberData.class).getQueueNumber();
-        return String.format(MESSAGE_FORMAT, queue - 1);
+        var weeks = queue - 1;
+        if  (weeks == 0) {
+            return CURRENT_WEEK_MESSAGE;
+        }
+        return String.format(MESSAGE_FORMAT, weeks);
     }
 
     @Autowired

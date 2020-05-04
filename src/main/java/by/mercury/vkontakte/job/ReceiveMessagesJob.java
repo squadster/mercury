@@ -55,8 +55,13 @@ public class ReceiveMessagesJob implements Job {
     private void executeCommand(CommandContext context) {
         try {
             commandService.resolve(context).execute(context);
-        } catch (IllegalStateException exception) {
+        } catch (Exception exception) {
             log.warn(exception.getMessage());
+            try {
+                commandService.getCommandOnError().execute(context);
+            } catch (Exception e) {
+                log.error("Error during executing default command: {}", e.getMessage());
+            }
         }
     }
 

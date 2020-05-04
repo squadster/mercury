@@ -32,6 +32,11 @@ public class VkCommandService implements CommandService {
                 .orElse(vkUnknownCommand);
     }
 
+    @Override
+    public Command getCommandOnError() {
+        return vkUnknownCommand;
+    }
+
     @Autowired
     public void setVkUnknownCommand(VkUnknownCommand vkUnknownCommand) {
         this.vkUnknownCommand = vkUnknownCommand;
