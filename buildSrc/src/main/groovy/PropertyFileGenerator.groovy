@@ -17,7 +17,6 @@ class PropertyFileGenerator extends DefaultTask {
         def content = file.readLines().stream()
                 .map({ property -> updateProperty property })
                 .collect(Collectors.joining('\n'))
-        println "Properties:\n${content}"
         file.text = content
     }
 
