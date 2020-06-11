@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-@Component
 public class RegistrationPreprocessor implements CommandPreprocessor {
 
     public static final Integer PRIORITY = 10;

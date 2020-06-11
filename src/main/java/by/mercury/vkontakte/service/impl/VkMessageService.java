@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -25,6 +26,7 @@ public class VkMessageService implements MessageService {
                 .orElseGet(() -> Collections.singletonList(MessageType.TEXT))
                 .stream()
                 .map(sendMessageStrategies::get)
+                .filter(Objects::nonNull)
                 .forEach(strategy -> strategy.send(message));
     }
 

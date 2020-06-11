@@ -18,7 +18,6 @@ import java.nio.file.Files;
  * @author Yegor Ikbaev
  */
 @Slf4j
-@Service
 public class DefaultSpeechService implements SpeechService {
 
     private SynthesizeSpeechStrategy synthesizeSpeechStrategy;
