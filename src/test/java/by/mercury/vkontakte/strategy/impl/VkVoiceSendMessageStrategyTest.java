@@ -4,6 +4,7 @@ import by.mercury.core.exception.SendMessageException;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.model.UserModel;
 import by.mercury.core.service.SpeechService;
+import by.mercury.core.service.UploadService;
 import com.vk.api.sdk.actions.Docs;
 import com.vk.api.sdk.actions.Messages;
 import com.vk.api.sdk.actions.Upload;
@@ -39,7 +40,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class VoiceSendMessageStrategyTest {
+public class VkVoiceSendMessageStrategyTest {
 
     private static final Integer PEER_ID = 12345;
     private static final Integer MESSAGE_ID = 54321;
@@ -48,7 +49,7 @@ public class VoiceSendMessageStrategyTest {
     private static final String MESSAGE_TEXT = "text";
 
     @InjectMocks
-    private VoiceSendMessageStrategy testedInstance;
+    private VkVoiceSendMessageStrategy testedInstance;
 
     @Mock
     private SpeechService speechService;
@@ -56,6 +57,8 @@ public class VoiceSendMessageStrategyTest {
     private VkApiClient vkApiClient;
     @Mock
     private GroupActor vkGroupActor;
+    @Mock
+    private UploadService uploadService;
 
     @Mock
     private Docs docs;
@@ -134,14 +137,5 @@ public class VoiceSendMessageStrategyTest {
         when(query.execute()).thenReturn(null);
 
         assertDoesNotThrow(() -> testedInstance.send(message));
-    }
-
-    @Test
-    public void shouldThrowExceptionIfNotPresent() throws ClientException, ApiException {
-        when(query.execute()).thenThrow(new ClientException(EXCEPTION_MESSAGE));
-
-        SendMessageException actual = assertThrows(SendMessageException.class, () -> testedInstance.send(message));
-
-        assertEquals(EXCEPTION_MESSAGE, actual.getMessage());
     }
 }

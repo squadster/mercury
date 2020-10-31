@@ -1,7 +1,6 @@
 package by.mercury.vkontakte.preprocessor;
 
 import by.mercury.core.command.CommandContext;
-import by.mercury.core.command.CommandPreprocessor;
 import by.mercury.core.service.SpeechService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import static by.mercury.vkontakte.preprocessor.AudioMessagePreprocessor.AUDIO_M
 
 @Slf4j
 @Component
-public class AudioMessageRecognizePreprocessor implements CommandPreprocessor {
+public class AudioMessageRecognizePreprocessor extends AbstractVkPreprocessor {
 
     public static final Integer PRIORITY = 11;
 

@@ -1,7 +1,8 @@
-package by.mercury.vkontakte.facade.impl;
+package by.mercury.core.facade.impl;
 
 import by.mercury.core.data.MessageData;
 import by.mercury.core.data.UserData;
+import by.mercury.core.facade.impl.MessageFacadeImpl;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.service.MessageService;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,13 +17,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class VkMessageFacadeTest {
+public class MessageFacadeImplTest {
 
     private static final String TEXT = "text";
     private static final Integer PEER_ID = 1;
 
     @InjectMocks
-    private VkMessageFacade testedInstance;
+    private MessageFacadeImpl testedInstance;
 
     @Mock
     private MessageService messageService;

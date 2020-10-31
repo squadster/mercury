@@ -2,6 +2,7 @@ package by.mercury.vkontakte.command;
 
 import by.mercury.core.command.Command;
 import by.mercury.core.command.CommandContext;
+import by.mercury.core.model.Channel;
 import by.mercury.core.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
@@ -21,6 +22,11 @@ public abstract class AbstractVkCommand implements Command {
         this.messageService = messageService;
         this.restTemplate = restTemplate;
         this.keyWords = new ArrayList<>(keyWords);
+    }
+
+    @Override
+    public boolean support(Channel channel) {
+        return channel == Channel.VK;
     }
 
     @Override

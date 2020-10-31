@@ -1,4 +1,4 @@
-package by.mercury.vkontakte.service.impl;
+package by.mercury.core.service.impl;
 
 import by.mercury.core.dao.UserDao;
 import by.mercury.core.model.UserModel;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class VkUserServiceTest {
+public class DefaultUserServiceTest {
 
     private static final Long EXISTED_USER_ID = 1L;
     private static final Long NOT_EXISTED_USER_ID = 0L;
@@ -25,7 +25,7 @@ public class VkUserServiceTest {
     private static final Integer NOT_EXISTED_PEER_ID = 0;
 
     @InjectMocks
-    private VkUserService testedInstance;
+    private DefaultUserService testedInstance;
 
     @Mock
     private UserDao userDao;

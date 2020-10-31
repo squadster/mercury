@@ -1,5 +1,7 @@
 package by.mercury.core.command;
 
+import by.mercury.core.model.Channel;
+
 /**
  * Interface for command
  *
@@ -7,6 +9,8 @@ package by.mercury.core.command;
  */
 public interface Command {
 
+    boolean support(Channel channel);
+    
     boolean support(CommandContext context);
     
     /**

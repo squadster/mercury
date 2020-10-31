@@ -1,17 +1,23 @@
 package by.mercury.vkontakte.strategy.impl;
 
+import by.mercury.core.data.MessageType;
 import by.mercury.core.exception.SendMessageException;
+import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.service.SpeechService;
 import by.mercury.core.strategy.SendMessageStrategy;
-import by.mercury.vkontakte.service.UploadService;
+import by.mercury.core.service.UploadService;
 import com.vk.api.sdk.objects.enums.DocsType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
 
 import static java.nio.file.Files.deleteIfExists;
 
@@ -20,14 +26,24 @@ import static java.nio.file.Files.deleteIfExists;
  *
  * @author Yegor Ikbaev
  */
-public class VoiceSendMessageStrategy implements SendMessageStrategy {
+public class VkVoiceSendMessageStrategy implements SendMessageStrategy {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(VoiceSendMessageStrategy.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(VkVoiceSendMessageStrategy.class);
     
     private SpeechService speechService;
     
     private UploadService uploadService;
+    
+    @Override
+    public boolean support(Collection<Channel> channels) {
+        return Optional.ofNullable(channels).orElseGet(Collections::emptyList).contains(Channel.VK);
+    }
 
+    @Override
+    public boolean support(MessageType messageType) {
+        return messageType == MessageType.VOICE;
+    }
+    
     @Override
     public void send(MessageModel message) {
         try {
@@ -47,6 +63,7 @@ public class VoiceSendMessageStrategy implements SendMessageStrategy {
     }
 
     @Autowired
+    @Qualifier(value = "vkUploadService")
     public void setUploadService(UploadService uploadService) {
         this.uploadService = uploadService;
     }

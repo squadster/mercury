@@ -2,6 +2,7 @@ package by.mercury.vkontakte.command;
 
 import by.mercury.core.command.CommandContext;
 import by.mercury.core.data.MessageType;
+import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.model.UserModel;
 import by.mercury.core.service.MessageService;
@@ -33,6 +34,7 @@ public class VkDutyTimeCommand extends AbstractVkCommand {
                 .text(dutyTimeText(context.getMessage().getAuthor()))
                 .target(context.getMessage().getAuthor())
                 .types(Collections.singletonList(MessageType.VOICE))
+                .targetChannels(Collections.singleton(Channel.VK))
                 .build();
         getMessageService().send(message);
     }

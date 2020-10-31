@@ -1,4 +1,4 @@
-package by.mercury.vkontakte.service.impl;
+package by.mercury.core.service.impl;
 
 import by.mercury.core.dao.UserDao;
 import by.mercury.core.model.UserModel;
@@ -11,12 +11,12 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * Vk implementation of {@link UserService}
+ * Implementation of {@link UserService}
  *
  * @author Yegor Ikbaev
  */
 @Service
-public class VkUserService implements UserService {
+public class DefaultUserService implements UserService {
 
     private UserDao userDao;
 

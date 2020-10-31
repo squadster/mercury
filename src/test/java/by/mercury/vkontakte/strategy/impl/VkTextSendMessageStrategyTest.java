@@ -23,13 +23,13 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class TextSendMessageStrategyTest {
+public class VkTextSendMessageStrategyTest {
 
     private static final String EXCEPTION_MESSAGE = "message";
     private static final String MESSAGE_TEXT = "text";
 
     @InjectMocks
-    private TextSendMessageStrategy testedInstance;
+    private VkTextSendMessageStrategy testedInstance;
 
     @Mock
     private VkApiClient vkApiClient;
