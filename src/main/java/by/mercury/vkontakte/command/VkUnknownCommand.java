@@ -6,8 +6,8 @@ import by.mercury.core.data.MessageType;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.service.MessageService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 
@@ -18,9 +18,11 @@ import java.util.Collections;
  */
 @Slf4j
 @Component
-public class VkUnknownCommand implements Command {
-    
-    private MessageService messageService;
+public class VkUnknownCommand extends AbstractVkCommand {
+
+    public VkUnknownCommand(MessageService messageService, RestTemplate restTemplate) {
+        super(messageService, restTemplate, Collections.emptyList());
+    }
 
     @Override
     public boolean support(CommandContext context) {
@@ -36,11 +38,6 @@ public class VkUnknownCommand implements Command {
                 .text("Не удалось распознать сообщение")
                 .types(Collections.singletonList(MessageType.VOICE))
                 .build();
-        messageService.send(message);
-    }
-    
-    @Autowired
-    public void setMessageService(MessageService messageService) {
-        this.messageService = messageService;
+        getMessageService().send(message);
     }
 }
