@@ -35,7 +35,7 @@ public class VkConfiguration {
 
     @Bean
     public Map<MessageType, SendMessageStrategy> sendMessageStrategies() {
-        return Map.of(MessageType.TEXT, textSendMessageStrategy());
+        return Map.of(MessageType.TEXT, textSendMessageStrategy(), MessageType.VOICE, voiceSendMessageStrategy());
     }
 
     @Bean
@@ -43,6 +43,7 @@ public class VkConfiguration {
         return new TextSendMessageStrategy();
     }
 
+    @Bean
     public VoiceSendMessageStrategy voiceSendMessageStrategy() {
         return new VoiceSendMessageStrategy();
     }

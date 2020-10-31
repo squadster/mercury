@@ -15,6 +15,7 @@ import java.util.Optional;
 import static by.mercury.vkontakte.preprocessor.AudioMessagePreprocessor.AUDIO_MESSAGE_KEY;
 
 @Slf4j
+@Component
 public class AudioMessageRecognizePreprocessor implements CommandPreprocessor {
 
     public static final Integer PRIORITY = 11;

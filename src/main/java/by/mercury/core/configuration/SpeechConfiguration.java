@@ -16,6 +16,7 @@ import software.amazon.awssdk.services.transcribestreaming.TranscribeStreamingAs
 
 import javax.annotation.PostConstruct;
 
+@Configuration
 public class SpeechConfiguration {
 
     @Value("${aws.accessKeyId}")
