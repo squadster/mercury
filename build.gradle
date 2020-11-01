@@ -68,6 +68,9 @@ dependencies {
 
     compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.2'
     compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.66'
+
+    compile group: 'org.telegram', name: 'telegrambots', version: '4.9.2'
+    compile group: 'org.telegram', name: 'telegrambotsextensions', version: '4.9.2'
 }
 
 jacocoTestReport {
