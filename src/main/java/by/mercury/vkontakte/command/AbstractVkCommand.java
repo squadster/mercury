@@ -5,7 +5,6 @@ import by.mercury.core.command.CommandContext;
 import by.mercury.core.model.Channel;
 import by.mercury.core.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +13,9 @@ public abstract class AbstractVkCommand implements Command {
 
     private MessageService messageService;
     
-    private RestTemplate restTemplate;
-
     private List<String> keyWords;
 
-    public AbstractVkCommand(MessageService messageService, RestTemplate restTemplate, List<String> keyWords) {
-        this.messageService = messageService;
-        this.restTemplate = restTemplate;
+    public AbstractVkCommand(List<String> keyWords) {
         this.keyWords = new ArrayList<>(keyWords);
     }
 
@@ -42,15 +37,6 @@ public abstract class AbstractVkCommand implements Command {
     @Autowired
     public void setMessageService(MessageService messageService) {
         this.messageService = messageService;
-    }
-
-    public RestTemplate getRestTemplate() {
-        return restTemplate;
-    }
-
-    @Autowired
-    public void setRestTemplate(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
     }
 
     public List<String> getKeyWords() {

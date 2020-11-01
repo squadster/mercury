@@ -4,10 +4,8 @@ import by.mercury.core.command.CommandContext;
 import by.mercury.core.data.MessageType;
 import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
-import by.mercury.core.service.MessageService;
 import by.mercury.core.service.UserService;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,8 +17,8 @@ public class VkGenerateTokenCommand extends AbstractVkCommand {
 
     private UserService userService;
     
-    public VkGenerateTokenCommand(MessageService messageService, RestTemplate restTemplate, UserService userService) {
-        super(messageService, restTemplate, Arrays.asList("telegram", "token"));
+    public VkGenerateTokenCommand(UserService userService) {
+        super(Arrays.asList("telegram", "token"));
         this.userService = userService;
     }
 

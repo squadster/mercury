@@ -18,7 +18,7 @@ public class SetTokenCommand extends TelegramAbstractCommand {
     public void execute(AbsSender sender, User user, Chat chat, String[] arguments) {
         var token = getArgument(arguments, 0);
         getRootUser(token).ifPresentOrElse(rootUser -> updateUser(rootUser, user, sender, chat), 
-                () -> sendNotValidTokenMessage(user, sender, chat));
+                () -> sendNotValidTokenMessage(sender, chat));
         
     }
     
@@ -31,7 +31,7 @@ public class SetTokenCommand extends TelegramAbstractCommand {
         execute(sender, message);
     }
     
-    private void sendNotValidTokenMessage(User telegramUser, AbsSender sender, Chat chat) {
+    private void sendNotValidTokenMessage(AbsSender sender, Chat chat) {
         var message = new SendMessage();
         message.setChatId(chat.getId().toString());
         message.setText("Token is invalid, try again");
