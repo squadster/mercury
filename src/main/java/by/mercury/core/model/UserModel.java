@@ -33,6 +33,10 @@ public class UserModel {
     @Column(name = "uid")
     private String uid;
 
+    private Integer telegramId;
+    
+    private String telegramToken;
+
     @Transient
     private Integer peerId;
 

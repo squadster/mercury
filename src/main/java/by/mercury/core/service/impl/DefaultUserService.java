@@ -31,6 +31,16 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
+    public Optional<UserModel> findByTelegramId(Integer telegramId) {
+        return userDao.findByTelegramId(telegramId);
+    }
+
+    @Override
+    public Optional<UserModel> findByTelegramToken(String token) {
+        return userDao.findByTelegramToken(token);
+    }
+
+    @Override
     public Collection<UserModel> saveAll(Collection<UserModel> users) {
         return IterableUtils.toList(userDao.saveAll(users));
     }
