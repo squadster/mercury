@@ -4,13 +4,13 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.1.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.3.5.RELEASE")
     }
 }
 
 plugins {
-    id 'org.springframework.boot' version '2.2.2.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'org.springframework.boot' version '2.3.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
     id 'jacoco'
 }
@@ -34,12 +34,12 @@ configurations {
     }
 }
 
-def springBootVersion = '2.2.4.RELEASE'
+def springBootVersion = '2.3.5.RELEASE'
 
 dependencies {
 
-    compileOnly 'org.projectlombok:lombok:1.18.10'
-    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
 
     compile ('com.vk.api:sdk:1.0.6') {
         exclude group : 'org.apache.logging.log4j', module: 'log4j'
@@ -52,7 +52,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
 
-    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.9'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.13'
 
     compile (group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: '5.2') {
         exclude group: 'org.slf4j', module: 'slf4j-log4j'
