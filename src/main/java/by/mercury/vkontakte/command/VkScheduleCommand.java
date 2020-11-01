@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 @Slf4j
@@ -33,8 +34,16 @@ public class VkScheduleCommand extends AbstractVkCommand {
                 .map(MessageModel::getAuthor)
                 .map(scheduleService::getScheduleForUser)
                 .map(scheduleService::generateSchedule)
-                .ifPresentOrElse(file -> uploadService.uploadFile(context.getMessage(), file, DocsType.DOC), 
+                .ifPresentOrElse(file -> uploadService.uploadFile(messageOnSuccess(context), file, DocsType.DOC), 
                         () -> getMessageService().send(messageOnFailure(context)));
+    }
+    
+    private MessageModel messageOnSuccess(CommandContext context) {
+        return MessageModel.builder()
+                .target(context.getMessage().getAuthor())
+                .types(Collections.singletonList(MessageType.TEXT))
+                .text("")
+                .build();
     }
     
     private MessageModel messageOnFailure(CommandContext context) {

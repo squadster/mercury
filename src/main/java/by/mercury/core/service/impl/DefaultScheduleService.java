@@ -1,4 +1,4 @@
-package by.mercury.vkontakte.service.impl;
+package by.mercury.core.service.impl;
 
 import by.mercury.core.dao.ScheduleDao;
 import by.mercury.core.dao.SquadMemberDao;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 import static java.lang.String.format;
 
 @Service
-public class VkScheduleService implements ScheduleService {
+public class DefaultScheduleService implements ScheduleService {
 
     private static final String PDF_PREFIX = "pdf_%d_";
     private static final String PDF_EXTENSION = ".pdf";
@@ -36,7 +36,7 @@ public class VkScheduleService implements ScheduleService {
     
     private SquadMemberDao squadMemberDao;
 
-    public VkScheduleService(ScheduleDao scheduleDao, SquadMemberDao squadMemberDao) {
+    public DefaultScheduleService(ScheduleDao scheduleDao, SquadMemberDao squadMemberDao) {
         this.scheduleDao = scheduleDao;
         this.squadMemberDao = squadMemberDao;
     }
@@ -46,7 +46,7 @@ public class VkScheduleService implements ScheduleService {
         return squadMemberDao.findByUserId(user.getId())
                 .map(SquadMemberModel::getSquadId)
                 .flatMap(scheduleDao::findBySquad)
-                .orElseThrow(() -> new IllegalArgumentException("There is no schedule for " + user.getId()));
+                .orElseThrow(() -> new IllegalArgumentException("There is no schedule for " + user.getId() + "\n"));
     }
 
     @Override
