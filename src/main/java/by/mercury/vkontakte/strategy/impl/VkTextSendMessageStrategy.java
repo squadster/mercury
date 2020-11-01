@@ -1,6 +1,8 @@
 package by.mercury.vkontakte.strategy.impl;
 
+import by.mercury.core.data.MessageType;
 import by.mercury.core.exception.SendMessageException;
+import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.strategy.SendMessageStrategy;
 import com.vk.api.sdk.client.VkApiClient;
@@ -12,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.security.SecureRandom;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -19,14 +24,24 @@ import java.util.Random;
  *
  * @author Yegor Ikbaev
  */
-public class TextSendMessageStrategy implements SendMessageStrategy {
+public class VkTextSendMessageStrategy implements SendMessageStrategy {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TextSendMessageStrategy.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(VkTextSendMessageStrategy.class);
     private static final Random RANDOM = new SecureRandom();
 
     private VkApiClient vkApiClient;
 
     private GroupActor vkGroupActor;
+
+    @Override
+    public boolean support(Collection<Channel> channels) {
+        return Optional.ofNullable(channels).orElseGet(Collections::emptyList).contains(Channel.VK);
+    }
+
+    @Override
+    public boolean support(MessageType messageType) {
+        return messageType == MessageType.TEXT;
+    }
 
     /**
      * Send text message.

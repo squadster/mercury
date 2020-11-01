@@ -1,16 +1,18 @@
 package by.mercury.vkontakte.service.impl;
 
 import by.mercury.core.command.CommandContext;
+import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.model.UserModel;
 import by.mercury.core.service.CommandContextService;
 import by.mercury.core.service.UserService;
-import by.mercury.vkontakte.context.VkCommandContext;
+import by.mercury.core.command.impl.CommandContextImpl;
 import com.vk.api.sdk.objects.messages.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,7 @@ public class VkCommandContextService implements CommandContextService<Message> {
     public CommandContext build(Message message) {
         Assert.notNull(message, "Message must not be null");
 
-        return VkCommandContext.builder()
+        return CommandContextImpl.builder()
                 .message(createMessageModel(message))
                 .parameters(parameters(message))
                 .build();
@@ -40,6 +42,8 @@ public class VkCommandContextService implements CommandContextService<Message> {
         return MessageModel.builder()
                 .text(message.getText())
                 .author(gerOrCreateAuthor(message))
+                .sourceChannel(Channel.VK)
+                .targetChannels(Collections.singletonList(Channel.VK))
                 .build();
     }
 

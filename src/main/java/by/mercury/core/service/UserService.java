@@ -27,6 +27,10 @@ public interface UserService {
      * @return the entity with the given peerId or {@literal Optional#empty()} if none found
      */
     Optional<UserModel> findByPeerId(Integer peerId);
+    
+    Optional<UserModel> findByTelegramId(Integer telegramId);
+
+    Optional<UserModel> findByTelegramToken(String token);
 
     /**
      * Saves all given entities.

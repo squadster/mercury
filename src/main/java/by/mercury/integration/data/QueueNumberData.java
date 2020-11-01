@@ -1,4 +1,4 @@
-package by.mercury.vkontakte.command.data;
+package by.mercury.integration.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

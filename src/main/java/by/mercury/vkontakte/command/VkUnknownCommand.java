@@ -3,11 +3,10 @@ package by.mercury.vkontakte.command;
 import by.mercury.core.command.Command;
 import by.mercury.core.command.CommandContext;
 import by.mercury.core.data.MessageType;
+import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
-import by.mercury.core.service.MessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 
@@ -20,8 +19,8 @@ import java.util.Collections;
 @Component
 public class VkUnknownCommand extends AbstractVkCommand {
 
-    public VkUnknownCommand(MessageService messageService, RestTemplate restTemplate) {
-        super(messageService, restTemplate, Collections.emptyList());
+    public VkUnknownCommand() {
+        super(Collections.emptyList());
     }
 
     @Override
@@ -37,6 +36,7 @@ public class VkUnknownCommand extends AbstractVkCommand {
                 .target(source.getAuthor())
                 .text("Не удалось распознать сообщение")
                 .types(Collections.singletonList(MessageType.VOICE))
+                .targetChannels(Collections.singleton(Channel.VK))
                 .build();
         getMessageService().send(message);
     }

@@ -1,7 +1,7 @@
 package by.mercury.vkontakte.service.impl;
 
 import by.mercury.core.model.MessageModel;
-import by.mercury.vkontakte.service.UploadService;
+import by.mercury.core.service.UploadService;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.exceptions.ApiException;

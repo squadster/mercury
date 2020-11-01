@@ -1,4 +1,4 @@
-package by.mercury.vkontakte.context;
+package by.mercury.core.command.impl;
 
 import by.mercury.core.command.CommandContext;
 import by.mercury.core.model.MessageModel;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.Map;
 
 /**
- * Vk implementation of {@link CommandContext}
+ * Implementation of {@link CommandContext}
  *
  * @author Yegor Ikbaev
  */
@@ -18,7 +18,7 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VkCommandContext implements CommandContext {
+public class CommandContextImpl implements CommandContext {
 
     private MessageModel message;
 

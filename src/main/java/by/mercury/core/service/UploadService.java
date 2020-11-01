@@ -1,4 +1,4 @@
-package by.mercury.vkontakte.service;
+package by.mercury.core.service;
 
 import by.mercury.core.model.MessageModel;
 import com.vk.api.sdk.objects.enums.DocsType;

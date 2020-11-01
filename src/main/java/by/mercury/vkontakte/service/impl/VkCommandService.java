@@ -2,6 +2,7 @@ package by.mercury.vkontakte.service.impl;
 
 import by.mercury.core.command.Command;
 import by.mercury.core.command.CommandContext;
+import by.mercury.core.model.Channel;
 import by.mercury.core.service.CommandService;
 import by.mercury.vkontakte.command.VkUnknownCommand;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Vkontakte test implementation of {@link CommandService}
@@ -44,6 +46,8 @@ public class VkCommandService implements CommandService {
 
     @Autowired
     public void setCommands(List<Command> commands) {
-        this.commands = commands;
+        this.commands = commands.stream()
+                .filter(command -> command.support(Channel.VK))
+                .collect(Collectors.toList());
     }
 }

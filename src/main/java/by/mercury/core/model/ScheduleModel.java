@@ -29,7 +29,7 @@ public class ScheduleModel {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "schedule")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<LessonModel> lessons;
     

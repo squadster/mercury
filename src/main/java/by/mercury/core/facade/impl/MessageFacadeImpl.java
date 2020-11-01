@@ -1,4 +1,4 @@
-package by.mercury.vkontakte.facade.impl;
+package by.mercury.core.facade.impl;
 
 import by.mercury.core.data.MessageData;
 import by.mercury.core.facade.MessageFacade;
@@ -14,13 +14,13 @@ import java.util.Collections;
 import java.util.Optional;
 
 /**
- * Vkontakte implementation of {@link MessageFacade}
+ * Implementation of {@link MessageFacade}
  *
  * @author Yegor Ikbaev
  */
 @Slf4j
 @Service
-public class VkMessageFacade implements MessageFacade {
+public class MessageFacadeImpl implements MessageFacade {
 
     private MessageService messageService;
 

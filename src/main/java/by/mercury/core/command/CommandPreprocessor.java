@@ -1,5 +1,9 @@
 package by.mercury.core.command;
 
+import by.mercury.core.model.Channel;
+
+import java.util.Collection;
+
 /**
  * Interface for preprocessor for command
  *
@@ -7,6 +11,8 @@ package by.mercury.core.command;
  */
 public interface CommandPreprocessor {
 
+    boolean support(Collection<Channel> channels);
+    
     /**
      * Preprocess {@link CommandContext} before execution in {@link Command}
      *

@@ -3,12 +3,14 @@ package by.mercury.vkontakte.job;
 import by.mercury.core.command.CommandContext;
 import by.mercury.core.command.CommandPreprocessor;
 import by.mercury.core.job.Job;
+import by.mercury.core.model.Channel;
 import by.mercury.core.service.CommandContextService;
 import by.mercury.core.service.CommandService;
 import by.mercury.core.service.MessageReceiveService;
 import com.vk.api.sdk.objects.messages.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -67,11 +69,13 @@ public class ReceiveMessagesJob implements Job {
     }
 
     @Autowired
+    @Qualifier(value = "vkReceiveMessageService")
     public void setMessageReceiveService(MessageReceiveService<Message> messageReceiveService) {
         this.messageReceiveService = messageReceiveService;
     }
 
     @Autowired
+    @Qualifier(value = "vkCommandContextService")
     public void setCommandContextService(CommandContextService<Message> commandContextService) {
         this.commandContextService = commandContextService;
     }
@@ -79,11 +83,13 @@ public class ReceiveMessagesJob implements Job {
     @Autowired(required = false)
     public void setPreprocessors(List<CommandPreprocessor> preprocessors) {
         this.preprocessors = preprocessors.stream()
+                .filter(preprocessor -> preprocessor.support(Collections.singleton(Channel.VK)))
                 .sorted(Comparator.comparingInt(CommandPreprocessor::getPriority))
                 .collect(Collectors.toList());
     }
 
     @Autowired
+    @Qualifier(value = "vkCommandService")
     public void setCommandService(CommandService commandService) {
         this.commandService = commandService;
     }
