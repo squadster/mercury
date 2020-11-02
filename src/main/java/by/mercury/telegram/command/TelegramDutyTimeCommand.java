@@ -23,11 +23,11 @@ public class TelegramDutyTimeCommand extends TelegramAbstractCommand {
 
     @Override
     public void execute(AbsSender sender, User user, Chat chat, String[] arguments) {
-        getRootUser(user).ifPresentOrElse(rootUser -> sendDutyTime(rootUser, user, sender, chat),
+        getRootUser(user).ifPresentOrElse(rootUser -> sendDutyTime(rootUser, sender, chat),
                 () -> sendNoSuchUserMessage(sender, chat));
     }
 
-    private void sendDutyTime(UserModel rootUser, User telegramUser, AbsSender sender, Chat chat) {
+    private void sendDutyTime(UserModel rootUser, AbsSender sender, Chat chat) {
         var message = new SendMessage();
         message.setChatId(chat.getId().toString());
         message.setText(getDutyTimeText(rootUser));
