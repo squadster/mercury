@@ -88,7 +88,11 @@ jacocoTestReport {
                               '/by/mercury/api/request/*',
                               '/by/mercury/api/response/*',
                               '/by/mercury/vk/context/*',
-                              '/by/mercury/vk/configuration/*'
+                              '/by/mercury/vk/configuration/*',
+                              '/by/mercury/integration/*',
+                              '/by/mercury/sample/*',
+                              '/by/mercury/telegram/*',
+                              '/by/mercury/vkontakte/*'
                     ])
         }))
     }
