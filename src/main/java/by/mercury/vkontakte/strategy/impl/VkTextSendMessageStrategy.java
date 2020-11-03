@@ -35,9 +35,8 @@ public class VkTextSendMessageStrategy implements SendMessageStrategy {
 
     @Override
     public boolean support(Collection<Channel> channels) {
-        return true;
-        //TODO use logic of channels
-        //return Optional.ofNullable(channels).orElseGet(Collections::emptyList).contains(Channel.VK);
+       var targetChannels = Optional.ofNullable(channels).orElseGet(Collections::emptyList);
+       return targetChannels.contains(Channel.VK) || targetChannels.isEmpty();
     }
 
     @Override
