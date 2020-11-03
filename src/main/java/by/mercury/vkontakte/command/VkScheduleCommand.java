@@ -9,7 +9,6 @@ import com.vk.api.sdk.objects.enums.DocsType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -22,7 +21,7 @@ public class VkScheduleCommand extends AbstractVkCommand {
     private UploadService uploadService;
     
     public VkScheduleCommand(ScheduleService scheduleService, UploadService uploadService) {
-        super(Arrays.asList("schedule", "timetable", "table", "timing", "syllabus", "sked"));
+        super(Collections.singletonList("расписание"));
         this.scheduleService = scheduleService;
         this.uploadService = uploadService;
     }
@@ -49,7 +48,7 @@ public class VkScheduleCommand extends AbstractVkCommand {
     private MessageModel messageOnFailure(CommandContext context) {
         return MessageModel.builder()
                 .target(context.getMessage().getAuthor())
-                .types(Arrays.asList(MessageType.TEXT, MessageType.VOICE))
+                .types(Collections.singletonList(MessageType.TEXT))
                 .text("Не удалось получить расписание")
                 .build();
     }

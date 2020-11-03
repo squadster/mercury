@@ -11,13 +11,13 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 @Component
 public class TelegramDutyTimeCommand extends TelegramAbstractCommand {
 
-    private static final String CURRENT_WEEK_MESSAGE = "You are duty on this week";
-    private static final String MESSAGE_FORMAT = "You are duty through %d weeks";
+    private static final String CURRENT_WEEK_MESSAGE = "Вы дежурный на этой недели";
+    private static final String MESSAGE_FORMAT = "Вы дежурный через %d недель";
     
     private SquadsterApiService squadsterApiService;
     
     public TelegramDutyTimeCommand(SquadsterApiService squadsterApiService) {
-        super("duty", "Command to know duty time");
+        super("duty", "Узнать, когда вы дежурный");
         this.squadsterApiService = squadsterApiService;
     }
 
@@ -37,7 +37,7 @@ public class TelegramDutyTimeCommand extends TelegramAbstractCommand {
     private void sendNoSuchUserMessage(AbsSender sender, Chat chat) {
         var message = new SendMessage();
         message.setChatId(chat.getId().toString());
-        message.setText("User is not valid");
+        message.setText("Вы не зарегистрировались");
         execute(sender, message);
     } 
 

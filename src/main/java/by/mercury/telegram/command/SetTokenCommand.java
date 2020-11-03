@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 public class SetTokenCommand extends TelegramAbstractCommand {
 
     public SetTokenCommand() {
-        super("set_token", "Command for setting token");
+        super("set_token", "Установить токен");
     }
 
     @Override
@@ -27,14 +27,14 @@ public class SetTokenCommand extends TelegramAbstractCommand {
         getUserService().save(rootUser);
         var message = new SendMessage();
         message.setChatId(chat.getId().toString());
-        message.setText("Token is valid");
+        message.setText("Токен верный, теперь вы можете работать с ботом");
         execute(sender, message);
     }
     
     private void sendNotValidTokenMessage(AbsSender sender, Chat chat) {
         var message = new SendMessage();
         message.setChatId(chat.getId().toString());
-        message.setText("Token is invalid, try again");
+        message.setText("Токен неверный, попробуйте еще раз");
         execute(sender, message);
     }
 }

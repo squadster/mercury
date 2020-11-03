@@ -15,7 +15,7 @@ public class ScheduleCommand extends TelegramAbstractCommand {
     private ScheduleService scheduleService;
     
     public ScheduleCommand(ScheduleService scheduleService) {
-        super("schedule", "generate schedule");
+        super("schedule", "Получить расписание");
         this.scheduleService = scheduleService;
     }
 
@@ -36,7 +36,7 @@ public class ScheduleCommand extends TelegramAbstractCommand {
     private void sendNoScheduleMessage(AbsSender sender, Chat chat) {
         var message = new SendMessage();
         message.setChatId(chat.getId().toString());
-        message.setText("There is no schedule");
+        message.setText("Расписание не найдено");
         execute(sender, message);
     }
 }

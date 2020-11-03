@@ -14,12 +14,12 @@ public class HelpCommand extends TelegramAbstractCommand {
     private ICommandRegistry commandRegistry;
     
     public HelpCommand() {
-        super("help", "Help command");
+        super("help", "Узнать все команды");
     }
 
     @Override
     public void execute(AbsSender sender, User user, Chat chat, String[] arguments) {
-        var builder = new StringBuilder("<b>Available commands:</b>");
+        var builder = new StringBuilder("<b>Доступные команды:</b>");
         commandRegistry.getRegisteredCommands().forEach(cmd -> builder.append(cmd.toString()).append("\n"));
         
         var message = new SendMessage();

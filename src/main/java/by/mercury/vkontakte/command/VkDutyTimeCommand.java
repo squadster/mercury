@@ -10,7 +10,6 @@ import by.mercury.integration.service.SquadsterApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 @Slf4j
@@ -23,7 +22,7 @@ public class VkDutyTimeCommand extends AbstractVkCommand {
     private SquadsterApiService squadsterApiService;
     
     public VkDutyTimeCommand(MessageService messageService, SquadsterApiService squadsterApiService) {
-        super(Arrays.asList("duty", "vigil", "daily", "order", "dude"));
+        super(Collections.singletonList("дежурство"));
         this.squadsterApiService = squadsterApiService;
     }
 
@@ -32,7 +31,7 @@ public class VkDutyTimeCommand extends AbstractVkCommand {
         var message = MessageModel.builder()
                 .text(dutyTimeText(context.getMessage().getAuthor()))
                 .target(context.getMessage().getAuthor())
-                .types(Collections.singletonList(MessageType.VOICE))
+                .types(Collections.singletonList(MessageType.TEXT))
                 .targetChannels(Collections.singleton(Channel.VK))
                 .build();
         getMessageService().send(message);
