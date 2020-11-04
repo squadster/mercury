@@ -2,6 +2,7 @@ package by.mercury.telegram.configuration;
 
 import by.mercury.core.service.UserService;
 import by.mercury.telegram.bot.TelegramBot;
+import by.mercury.telegram.strategy.impl.TelegramTextSendMessageStrategy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,5 +45,10 @@ public class TelegramConfiguration {
         var botsApi = new TelegramBotsApi();
         botsApi.registerBot(bot);
         return botsApi;
+    }
+
+    @Bean
+    public TelegramTextSendMessageStrategy telegramTextSendMessageStrategy() {
+        return new TelegramTextSendMessageStrategy();
     }
 }

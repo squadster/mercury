@@ -37,6 +37,8 @@ public class UserModel {
     
     private String telegramToken;
 
+    private Long chatId;
+
     @Transient
     private Integer peerId;
 

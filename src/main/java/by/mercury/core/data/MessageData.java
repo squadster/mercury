@@ -1,11 +1,13 @@
 package by.mercury.core.data;
 
+import by.mercury.core.model.Channel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * DTO class for {@link by.mercury.core.model.MessageModel}
@@ -19,6 +21,8 @@ import java.util.Collection;
 public class MessageData {
 
     private String text;
+
+    private List<Channel> targetChannels;
 
     private UserData author;
 
