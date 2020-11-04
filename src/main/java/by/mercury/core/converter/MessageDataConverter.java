@@ -30,6 +30,7 @@ public class MessageDataConverter implements Converter<MessageData, MessageModel
                 .text(source.getText())
                 .target(userDataConverter.convert(source.getTarget()))
                 .types(source.getTypes())
+                .targetChannels(source.getTargetChannels())
                 .build();
     }
 

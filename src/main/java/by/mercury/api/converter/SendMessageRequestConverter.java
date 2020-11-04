@@ -4,6 +4,7 @@ import by.mercury.api.request.SendMessageRequest;
 import by.mercury.core.data.MessageData;
 import by.mercury.core.data.MessageType;
 import by.mercury.core.data.UserData;
+import by.mercury.core.model.Channel;
 import by.mercury.core.model.UserModel;
 import by.mercury.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +42,14 @@ public class SendMessageRequestConverter implements Converter<SendMessageRequest
                 .orElseThrow(IllegalArgumentException::new);
         return MessageData.builder()
                 .text(source.getText())
+                .targetChannels(source.getTargetChannels().stream()
+                        .map(Channel::valueOf)
+                        .collect(Collectors.toList()))
                 .target(target)
                 .types(convert(source.getTypes()))
                 .build();
     }
-    
+
     private Collection<MessageType> convert(Collection<String> types) {
         return Optional.ofNullable(types).stream()
                 .flatMap(Collection::stream)
