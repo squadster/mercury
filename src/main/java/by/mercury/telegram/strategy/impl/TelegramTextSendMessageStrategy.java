@@ -22,7 +22,7 @@ public class TelegramTextSendMessageStrategy implements SendMessageStrategy {
     @Override
     public boolean support(Collection<Channel> channels) {
         var targetChannels = Optional.ofNullable(channels).orElseGet(Collections::emptyList);
-        return targetChannels.contains(Channel.TELEGRAM) || targetChannels.isEmpty();
+        return targetChannels.contains(Channel.TELEGRAM);
     }
 
     @Override
