@@ -33,8 +33,10 @@ public class UserModel {
     @Column(name = "uid")
     private String uid;
 
+    @Column(name = "telegram_id")
     private Integer telegramId;
     
+    @Column(name = "telegram_token")
     private String telegramToken;
 
     private Long chatId;

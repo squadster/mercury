@@ -24,6 +24,7 @@ public class SetTokenCommand extends TelegramAbstractCommand {
     
     private void updateUser(UserModel rootUser, User telegramUser, AbsSender sender, Chat chat) {
         rootUser.setTelegramId(telegramUser.getId());
+        rootUser.setChatId(chat.getId());
         getUserService().save(rootUser);
         var message = new SendMessage();
         message.setChatId(chat.getId().toString());

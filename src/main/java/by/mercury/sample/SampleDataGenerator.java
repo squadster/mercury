@@ -20,11 +20,9 @@ import java.time.LocalDate;
 public class SampleDataGenerator implements ApplicationRunner, Ordered {
 
     private static final int PRIORITY = Ordered.LOWEST_PRECEDENCE;
-    private static final Long USER_ID = 1L;
     private static final Long SCHEDULE_ID = 2L;
     private static final Long SQUAD = 721700L;
-
-
+    
     private UserService userService;
     
     private ScheduleDao scheduleDao;
@@ -45,9 +43,9 @@ public class SampleDataGenerator implements ApplicationRunner, Ordered {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        if (!"none".equals(peerId) && userService.findById(USER_ID).isEmpty()) {
+        if (!"none".equals(peerId) && userService.findById(Long.valueOf(peerId)).isEmpty()) {
             var user = UserModel.builder()
-                    .id(USER_ID)
+                    .id(Long.valueOf(peerId))
                     .uid(peerId)
                     .peerId(Integer.parseInt(peerId))
                     .build();
