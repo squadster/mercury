@@ -35,6 +35,7 @@ public class VkScheduleCommand extends AbstractVkCommand {
                 .map(scheduleService::generateSchedule)
                 .ifPresentOrElse(file -> uploadService.uploadFile(messageOnSuccess(context), file, DocsType.DOC), 
                         () -> getMessageService().send(messageOnFailure(context)));
+        log.info("Schedule receiving command for VK was successfully completed");
     }
     
     private MessageModel messageOnSuccess(CommandContext context) {

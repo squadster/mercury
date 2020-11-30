@@ -5,6 +5,7 @@ import by.mercury.core.data.MessageType;
 import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -13,6 +14,7 @@ import java.util.UUID;
 import static by.mercury.vkontakte.preprocessor.RegistrationPreprocessor.IS_FIRST_MESSAGE;
 
 @Component
+@Slf4j
 public class VkGenerateTokenCommand extends AbstractVkCommand {
 
     private UserService userService;
@@ -31,6 +33,7 @@ public class VkGenerateTokenCommand extends AbstractVkCommand {
                 .targetChannels(Collections.singleton(Channel.VK))
                 .build();
         getMessageService().send(message);
+        log.info("Token generation command for VK was successfully completed");
     }
     
     private String generateToken(CommandContext context) {

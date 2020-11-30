@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProperty scope="context" name="ELASTICSEARCH_HOST" source="elasticsearch.host"/>
+
+    <appender name="ELASTIC" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+        <url>http://${ELASTICSEARCH_HOST}/_bulk</url>
+        <index>bot-%date{yyyy-MM-dd}</index>
+        <type>tester</type>
+        <loggerName>es-logger</loggerName>
+        <errorLoggerName>es-error-logger</errorLoggerName>
+        <connectTimeout>30000</connectTimeout>
+        <errorsToStderr>false</errorsToStderr>
+        <includeCallerData>false</includeCallerData>
+        <logsToStderr>false</logsToStderr>
+        <maxQueueSize>104857600</maxQueueSize>
+        <maxRetries>3</maxRetries>
+        <readTimeout>30000</readTimeout>
+        <sleepTime>250</sleepTime>
+        <rawJsonMessage>false</rawJsonMessage>
+        <includeMdc>false</includeMdc>
+        <maxMessageSize>100</maxMessageSize>
+        <properties>
+            <property>
+                <name>host</name>
+                <value>${HOSTNAME}</value>
+                <allowEmpty>false</allowEmpty>
+            </property>
+            <property>
+                <name>severity</name>
+                <value>%level</value>
+            </property>
+            <property>
+                <name>thread</name>
+                <value>%thread</value>
+            </property>
+            <property>
+                <name>stacktrace</name>
+                <value>%ex</value>
+            </property>
+            <property>
+                <name>logger</name>
+                <value>%logger</value>
+            </property>
+        </properties>
+        <headers>
+            <header>
+                <name>Content-Type</name>
+                <value>application/json</value>
+            </header>
+        </headers>
+    </appender>
+
+    <appender name="Console"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
+            </Pattern>
+        </layout>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="Console" />
+        <appender-ref ref="ELASTIC"/>
+    </root>
+
+
+
+</configuration>
