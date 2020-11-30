@@ -1,5 +1,6 @@
 package by.mercury.telegram.command;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -10,6 +11,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import java.util.List;
 
 @Component
+@Slf4j
 public class HelpCommand extends TelegramAbstractCommand {
 
     private List<TelegramAbstractCommand> botCommands;
@@ -27,6 +29,7 @@ public class HelpCommand extends TelegramAbstractCommand {
         message.enableHtml(true);
         message.setText(builder.toString());
         execute(sender, message);
+        log.info("Help command for TELEGRAM was successfully completed");
     }
 
     @Autowired

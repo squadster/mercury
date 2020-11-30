@@ -1,6 +1,7 @@
 package by.mercury.telegram.command;
 
 import by.mercury.core.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -8,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
 @Component
+@Slf4j
 public class StartCommand extends TelegramAbstractCommand {
 
     public StartCommand(UserService userService) {
@@ -28,6 +30,7 @@ public class StartCommand extends TelegramAbstractCommand {
         message.setChatId(chat.getId().toString());
         message.setText(builder.toString());
         execute(sender, message);
+        log.info("Start command for TELEGRAM was successfully completed");
     }
 
     public void persistChatIdForUser(User user, Chat chat) {

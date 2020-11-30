@@ -35,6 +35,7 @@ public class VkDutyTimeCommand extends AbstractVkCommand {
                 .targetChannels(Collections.singleton(Channel.VK))
                 .build();
         getMessageService().send(message);
+        log.info("DutyTime command for VK was successfully completed");
     }
 
 

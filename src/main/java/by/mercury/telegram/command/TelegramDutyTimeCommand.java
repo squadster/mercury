@@ -2,6 +2,7 @@ package by.mercury.telegram.command;
 
 import by.mercury.core.model.UserModel;
 import by.mercury.integration.service.SquadsterApiService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -9,6 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
 @Component
+@Slf4j
 public class TelegramDutyTimeCommand extends TelegramAbstractCommand {
 
     private static final String CURRENT_WEEK_MESSAGE = "Вы дежурный на этой недели";
@@ -25,6 +27,7 @@ public class TelegramDutyTimeCommand extends TelegramAbstractCommand {
     public void execute(AbsSender sender, User user, Chat chat, String[] arguments) {
         getRootUser(user).ifPresentOrElse(rootUser -> sendDutyTime(rootUser, sender, chat),
                 () -> sendNoSuchUserMessage(sender, chat));
+        log.info("DutyTime command for TELEGRAM was successfully completed");
     }
 
     private void sendDutyTime(UserModel rootUser, AbsSender sender, Chat chat) {

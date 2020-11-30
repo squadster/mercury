@@ -39,5 +39,6 @@ public class VkUnknownCommand extends AbstractVkCommand {
                 .targetChannels(Collections.singleton(Channel.VK))
                 .build();
         getMessageService().send(message);
+        log.info("Unknown command for VK was received");
     }
 }

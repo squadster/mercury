@@ -1,6 +1,7 @@
 package by.mercury.telegram.command;
 
 import by.mercury.core.model.UserModel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -8,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
 @Component
+@Slf4j
 public class SetTokenCommand extends TelegramAbstractCommand {
 
     public SetTokenCommand() {
@@ -19,7 +21,7 @@ public class SetTokenCommand extends TelegramAbstractCommand {
         var token = getArgument(arguments, 0);
         getRootUser(token).ifPresentOrElse(rootUser -> updateUser(rootUser, user, sender, chat), 
                 () -> sendNotValidTokenMessage(sender, chat));
-        
+        log.info("SetToken command for TELEGRAM was successfully completed");
     }
     
     private void updateUser(UserModel rootUser, User telegramUser, AbsSender sender, Chat chat) {
