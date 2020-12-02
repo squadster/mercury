@@ -18,6 +18,8 @@ public interface SendMessageStrategy {
     
     boolean support(MessageType messageType);
     
+    boolean support(UserModel user);
+    
     /**
      * Sends message to user using {@link UserModel#getPeerId()}.
      *

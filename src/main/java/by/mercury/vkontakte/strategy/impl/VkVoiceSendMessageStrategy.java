@@ -4,6 +4,7 @@ import by.mercury.core.data.MessageType;
 import by.mercury.core.exception.SendMessageException;
 import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
+import by.mercury.core.model.UserModel;
 import by.mercury.core.service.SpeechService;
 import by.mercury.core.strategy.SendMessageStrategy;
 import by.mercury.core.service.UploadService;
@@ -44,6 +45,13 @@ public class VkVoiceSendMessageStrategy implements SendMessageStrategy {
         return messageType == MessageType.VOICE;
     }
     
+    @Override
+    public boolean support(UserModel user) {
+        return Optional.ofNullable(user)
+                .filter(u -> u.getPeerId() != null)
+                .isPresent();
+    }
+
     @Override
     public void send(MessageModel message) {
         try {

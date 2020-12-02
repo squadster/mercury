@@ -44,7 +44,7 @@ public class SendMessageRestController {
     public ResponseEntity<SendMessageResponse> send(@RequestBody @Validated SendMessageRequest request, Errors result) {
         try {
             if (!result.hasErrors()) {
-                messageFacade.send(converter.convert(request));
+                messageFacade.notify(converter.convert(request));
                 return handleSuccessfulCase();
             } else {
                 return handleErrorsCase(result);

@@ -48,6 +48,8 @@ public class SampleDataGenerator implements ApplicationRunner, Ordered {
                     .id(Long.valueOf(peerId))
                     .uid(peerId)
                     .peerId(Integer.parseInt(peerId))
+                    .enableNotificationsTelegram(true)
+                    .enableNotificationsVk(true)
                     .build();
             user = userService.save(user);
             generateSquad(user);
