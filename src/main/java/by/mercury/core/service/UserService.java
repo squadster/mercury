@@ -1,5 +1,6 @@
 package by.mercury.core.service;
 
+import by.mercury.core.model.Channel;
 import by.mercury.core.model.UserModel;
 
 import java.util.Collection;
@@ -50,4 +51,6 @@ public interface UserService {
      * @throws IllegalArgumentException in case the given {@literal user}
      */
     UserModel save(UserModel user);
+    
+    Collection<Channel> getAvailableChannels(UserModel user, Collection<Channel> channels);
 }

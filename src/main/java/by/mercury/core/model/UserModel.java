@@ -39,8 +39,15 @@ public class UserModel {
     @Column(name = "telegram_token")
     private String telegramToken;
 
+    @Column(name = "telegram_chat_id")
     private Long chatId;
 
+    @Column(name = "vk_notifications_enabled")
+    private Boolean enableNotificationsVk;
+
+    @Column(name = "telegram_notifications_enabled")
+    private Boolean enableNotificationsTelegram;
+    
     @Transient
     private Integer peerId;
 

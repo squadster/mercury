@@ -1,14 +1,16 @@
 package by.mercury.core.service.impl;
 
 import by.mercury.core.dao.UserDao;
+import by.mercury.core.model.Channel;
 import by.mercury.core.model.UserModel;
 import by.mercury.core.service.UserService;
 import org.apache.commons.collections4.IterableUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of {@link UserService}
@@ -18,7 +20,11 @@ import java.util.Optional;
 @Service
 public class DefaultUserService implements UserService {
 
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    public DefaultUserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public Optional<UserModel> findById(Long userId) {
@@ -50,8 +56,17 @@ public class DefaultUserService implements UserService {
         return userDao.save(user);
     }
 
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    @Override
+    public Collection<Channel> getAvailableChannels(UserModel user, Collection<Channel> channels) {
+        var availableChannels = new HashSet<Channel>();
+        if (user.getEnableNotificationsTelegram()) {
+            availableChannels.add(Channel.TELEGRAM);
+        }
+        if (user.getEnableNotificationsVk()) {
+            availableChannels.add(Channel.VK);
+        }
+        return channels.stream()
+                .filter(availableChannels::contains)
+                .collect(Collectors.toSet());
     }
 }

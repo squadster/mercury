@@ -22,7 +22,7 @@ public class MessageData {
 
     private String text;
 
-    private List<Channel> targetChannels;
+    private Collection<Channel> targetChannels;
 
     private UserData author;
 
