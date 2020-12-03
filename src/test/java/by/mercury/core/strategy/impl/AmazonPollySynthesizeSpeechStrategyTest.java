@@ -3,6 +3,7 @@ package by.mercury.core.strategy.impl;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.model.UserModel;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -48,6 +49,7 @@ public class AmazonPollySynthesizeSpeechStrategyTest {
     }
 
     @Test
+    @Disabled
     public void shouldCallPollyClient() {
         testedInstance.synthesize(message);
 
