@@ -5,12 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
+import org.telegram.telegrambots.meta.api.methods.GetFile;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.File;
 import java.util.List;
 
 @Slf4j
@@ -58,6 +60,9 @@ public class TelegramBot extends TelegramLongPollingCommandBot {
         }
 
         var message = update.getMessage();
+        /*GetFile getFile = new GetFile().setFileId(update.getMessage().getVoice().getFileId());
+        String filePath = execute(getFile).getFilePath();
+        File file = downloadFile(filePath, outputFile);*/
         var user = message.getFrom();
         try {
             if (!canSendMessage(user, message)) {

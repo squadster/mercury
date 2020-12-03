@@ -6,22 +6,23 @@ import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Component
-public class VkEnableNotifications extends AbstractVkCommand {
+public class VkDisableNotificationsCommand extends AbstractVkCommand {
 
-    public VkEnableNotifications() {
-        super(Collections.singletonList("включить"));
+    public VkDisableNotificationsCommand() {
+        super(Arrays.asList("отключить", "disable"));
     }
 
     @Override
     public void execute(CommandContext context) {
         var author = context.getMessage().getAuthor();
-        author.setEnableNotificationsVk(true);
+        author.setEnableNotificationsVk(false);
         getUserService().save(author);
         var message = MessageModel.builder()
-                .text("Уведомления включены")
+                .text("Уведомления отключены")
                 .target(context.getMessage().getAuthor())
                 .types(Collections.singletonList(MessageType.TEXT))
                 .targetChannels(Collections.singleton(Channel.VK))
@@ -29,4 +30,3 @@ public class VkEnableNotifications extends AbstractVkCommand {
         getMessageService().send(message);
     }
 }
-
