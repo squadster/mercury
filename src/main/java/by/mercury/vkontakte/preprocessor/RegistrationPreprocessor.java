@@ -1,14 +1,13 @@
 package by.mercury.vkontakte.preprocessor;
 
 import by.mercury.core.command.CommandContext;
-import by.mercury.core.command.CommandPreprocessor;
 import by.mercury.core.model.UserModel;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @Component
-public class RegistrationPreprocessor implements CommandPreprocessor {
+public class RegistrationPreprocessor extends AbstractVkPreprocessor {
 
     public static final Integer PRIORITY = 10;
 

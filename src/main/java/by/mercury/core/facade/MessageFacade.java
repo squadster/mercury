@@ -18,4 +18,6 @@ public interface MessageFacade {
      * @throws IllegalArgumentException                       if message or it's fields are null
      */
     void send(MessageData message);
+    
+    void notify(MessageData message);
 }

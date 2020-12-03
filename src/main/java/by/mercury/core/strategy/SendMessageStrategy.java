@@ -1,7 +1,11 @@
 package by.mercury.core.strategy;
 
+import by.mercury.core.data.MessageType;
+import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
 import by.mercury.core.model.UserModel;
+
+import java.util.Collection;
 
 /**
  * Strategy for sending message
@@ -10,6 +14,12 @@ import by.mercury.core.model.UserModel;
  */
 public interface SendMessageStrategy {
 
+    boolean support(Collection<Channel> channels);
+    
+    boolean support(MessageType messageType);
+    
+    boolean support(UserModel user);
+    
     /**
      * Sends message to user using {@link UserModel#getPeerId()}.
      *

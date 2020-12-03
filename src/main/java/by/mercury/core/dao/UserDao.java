@@ -19,4 +19,8 @@ public interface UserDao extends CrudRepository<UserModel, Long> {
      * @return the entity with the given peerId or {@literal Optional#empty()} if none found
      */
     Optional<UserModel> findByUid(String peerId);
+    
+    Optional<UserModel> findByTelegramId(Integer telegramId);
+    
+    Optional<UserModel> findByTelegramToken(String token);
 }

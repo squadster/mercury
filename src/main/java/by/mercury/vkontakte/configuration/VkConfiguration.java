@@ -1,9 +1,7 @@
 package by.mercury.vkontakte.configuration;
 
-import by.mercury.core.data.MessageType;
-import by.mercury.core.strategy.SendMessageStrategy;
-import by.mercury.vkontakte.strategy.impl.TextSendMessageStrategy;
-import by.mercury.vkontakte.strategy.impl.VoiceSendMessageStrategy;
+import by.mercury.vkontakte.strategy.impl.VkTextSendMessageStrategy;
+import by.mercury.vkontakte.strategy.impl.VkVoiceSendMessageStrategy;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
@@ -11,8 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Map;
 
 @Configuration
 public class VkConfiguration {
@@ -34,18 +30,13 @@ public class VkConfiguration {
     }
 
     @Bean
-    public Map<MessageType, SendMessageStrategy> sendMessageStrategies() {
-        return Map.of(MessageType.TEXT, textSendMessageStrategy(), MessageType.VOICE, voiceSendMessageStrategy());
+    public VkTextSendMessageStrategy textSendMessageStrategy() {
+        return new VkTextSendMessageStrategy();
     }
 
     @Bean
-    public TextSendMessageStrategy textSendMessageStrategy() {
-        return new TextSendMessageStrategy();
-    }
-
-    @Bean
-    public VoiceSendMessageStrategy voiceSendMessageStrategy() {
-        return new VoiceSendMessageStrategy();
+    public VkVoiceSendMessageStrategy voiceSendMessageStrategy() {
+        return new VkVoiceSendMessageStrategy();
     }
 
     @Bean

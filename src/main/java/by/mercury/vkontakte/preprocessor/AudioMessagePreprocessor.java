@@ -22,7 +22,7 @@ import static by.mercury.vkontakte.service.impl.VkCommandContextService.VK_MESSA
 
 @Slf4j
 @Component
-public class AudioMessagePreprocessor implements CommandPreprocessor {
+public class AudioMessagePreprocessor extends AbstractVkPreprocessor {
 
     public static final Integer PRIORITY = 11;
     

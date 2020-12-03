@@ -1,5 +1,8 @@
 package by.mercury.core.service;
 
+import by.mercury.core.data.UserConfiguration;
+import by.mercury.core.model.Channel;
+import by.mercury.core.model.UserConfigurationModel;
 import by.mercury.core.model.UserModel;
 
 import java.util.Collection;
@@ -27,6 +30,10 @@ public interface UserService {
      * @return the entity with the given peerId or {@literal Optional#empty()} if none found
      */
     Optional<UserModel> findByPeerId(Integer peerId);
+    
+    Optional<UserModel> findByTelegramId(Integer telegramId);
+
+    Optional<UserModel> findByTelegramToken(String token);
 
     /**
      * Saves all given entities.
@@ -46,4 +53,12 @@ public interface UserService {
      * @throws IllegalArgumentException in case the given {@literal user}
      */
     UserModel save(UserModel user);
+    
+    Collection<Channel> getAvailableChannels(UserModel user, Collection<Channel> channels);
+    
+    UserConfiguration getUserConfigurationForUser(UserModel user);
+
+    UserConfiguration getDefaultUserConfigurationForUser(UserModel user);
+    
+    void update(UserConfigurationModel configurations);
 }

@@ -26,4 +26,8 @@ public class MessageModel {
     private UserModel target;
     
     private Collection<MessageType> types;
+    
+    private Channel sourceChannel;
+    
+    private Collection<Channel> targetChannels;
 }
