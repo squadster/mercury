@@ -4,7 +4,9 @@ import by.mercury.core.data.MessageType;
 import by.mercury.core.exception.SendMessageException;
 import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
+import by.mercury.core.model.UserModel;
 import by.mercury.core.service.SpeechService;
+import by.mercury.core.service.UserService;
 import by.mercury.core.strategy.SendMessageStrategy;
 import by.mercury.core.service.UploadService;
 import com.vk.api.sdk.objects.enums.DocsType;
@@ -34,6 +36,8 @@ public class VkVoiceSendMessageStrategy implements SendMessageStrategy {
     
     private UploadService uploadService;
     
+    private UserService userService;
+    
     @Override
     public boolean support(Collection<Channel> channels) {
         return Optional.ofNullable(channels).orElseGet(Collections::emptyList).contains(Channel.VK);
@@ -44,6 +48,14 @@ public class VkVoiceSendMessageStrategy implements SendMessageStrategy {
         return messageType == MessageType.VOICE;
     }
     
+    @Override
+    public boolean support(UserModel user) {
+        return Optional.ofNullable(user)
+                .filter(u -> u.getPeerId() != null)
+                .filter(u -> userService.getUserConfigurationForUser(u).getEnableVoiceMessages())
+                .isPresent();
+    }
+
     @Override
     public void send(MessageModel message) {
         try {
@@ -66,5 +78,10 @@ public class VkVoiceSendMessageStrategy implements SendMessageStrategy {
     @Qualifier(value = "vkUploadService")
     public void setUploadService(UploadService uploadService) {
         this.uploadService = uploadService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

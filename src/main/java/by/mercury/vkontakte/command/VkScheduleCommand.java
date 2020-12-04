@@ -9,6 +9,7 @@ import com.vk.api.sdk.objects.enums.DocsType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -21,7 +22,7 @@ public class VkScheduleCommand extends AbstractVkCommand {
     private UploadService uploadService;
     
     public VkScheduleCommand(ScheduleService scheduleService, UploadService uploadService) {
-        super(Collections.singletonList("расписание"));
+        super(Arrays.asList("расписание", "schedule", "timetable", "table"));
         this.scheduleService = scheduleService;
         this.uploadService = uploadService;
     }

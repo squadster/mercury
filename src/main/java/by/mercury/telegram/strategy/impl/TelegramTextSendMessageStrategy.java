@@ -3,6 +3,7 @@ package by.mercury.telegram.strategy.impl;
 import by.mercury.core.data.MessageType;
 import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
+import by.mercury.core.model.UserModel;
 import by.mercury.core.strategy.SendMessageStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,13 @@ public class TelegramTextSendMessageStrategy implements SendMessageStrategy {
     @Override
     public boolean support(MessageType messageType) {
         return messageType == MessageType.TEXT;
+    }
+
+    @Override
+    public boolean support(UserModel user) {
+        return Optional.ofNullable(user)
+                .filter(u -> u.getChatId() != null)
+                .isPresent();
     }
 
     @Override

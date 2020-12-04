@@ -6,9 +6,9 @@ import by.mercury.core.model.MessageModel;
 import by.mercury.core.service.MessageService;
 import by.mercury.core.strategy.SendMessageStrategy;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +24,10 @@ public class DefaultMessageService implements MessageService {
     private static final String AND = " and ";
 
     private List<SendMessageStrategy> sendMessageStrategies;
+
+    public DefaultMessageService(List<SendMessageStrategy> sendMessageStrategies) {
+        this.sendMessageStrategies = new ArrayList<>(sendMessageStrategies);
+    }
 
     @Override
     public void send(MessageModel message) {
@@ -43,6 +47,7 @@ public class DefaultMessageService implements MessageService {
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
                 .filter(strategy -> strategy.support(message.getTargetChannels()))
+                .filter(strategy -> strategy.support(message.getTarget()))
                 .forEach(strategy -> strategy.send(message));
     }
 
@@ -52,8 +57,7 @@ public class DefaultMessageService implements MessageService {
                 .collect(Collectors.toList());
     }
 
-    @Autowired
     public void setSendMessageStrategies(List<SendMessageStrategy> sendMessageStrategies) {
-        this.sendMessageStrategies = sendMessageStrategies;
+        this.sendMessageStrategies = new ArrayList<>(sendMessageStrategies);
     }
 }

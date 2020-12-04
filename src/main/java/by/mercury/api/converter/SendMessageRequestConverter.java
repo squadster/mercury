@@ -7,7 +7,6 @@ import by.mercury.core.data.UserData;
 import by.mercury.core.model.Channel;
 import by.mercury.core.model.UserModel;
 import by.mercury.core.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -22,9 +21,14 @@ import java.util.stream.Collectors;
 @Component
 public class SendMessageRequestConverter implements Converter<SendMessageRequest, MessageData> {
 
-    private UserService userService;
+    private final UserService userService;
 
-    private Converter<UserModel, UserData> converter;
+    private final Converter<UserModel, UserData> converter;
+
+    public SendMessageRequestConverter(UserService userService, Converter<UserModel, UserData> converter) {
+        this.userService = userService;
+        this.converter = converter;
+    }
 
     /**
      * Convert the source object of type {@link SendMessageRequest} to target type {{@link MessageData}
@@ -42,15 +46,13 @@ public class SendMessageRequestConverter implements Converter<SendMessageRequest
                 .orElseThrow(IllegalArgumentException::new);
         return MessageData.builder()
                 .text(source.getText())
-                .targetChannels(source.getTargetChannels().stream()
-                        .map(Channel::valueOf)
-                        .collect(Collectors.toList()))
+                .targetChannels(convertChannels(source.getTargetChannels()))
                 .target(target)
-                .types(convert(source.getTypes()))
+                .types(convertTypes(source.getTypes()))
                 .build();
     }
 
-    private Collection<MessageType> convert(Collection<String> types) {
+    private Collection<MessageType> convertTypes(Collection<String> types) {
         return Optional.ofNullable(types).stream()
                 .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
@@ -58,13 +60,10 @@ public class SendMessageRequestConverter implements Converter<SendMessageRequest
                 .collect(Collectors.toSet());
     }
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setConverter(Converter<UserModel, UserData> converter) {
-        this.converter = converter;
+    private Collection<Channel> convertChannels(Collection<String> channels) {
+        return channels.stream()
+                .map(String::toUpperCase)
+                .map(Channel::valueOf)
+                .collect(Collectors.toSet());
     }
 }
