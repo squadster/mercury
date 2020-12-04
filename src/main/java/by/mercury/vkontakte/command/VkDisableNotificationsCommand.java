@@ -19,8 +19,7 @@ public class VkDisableNotificationsCommand extends AbstractVkCommand {
     @Override
     public void execute(CommandContext context) {
         var author = context.getMessage().getAuthor();
-        author.setEnableNotificationsVk(false);
-        getUserService().save(author);
+        getUserService().updateNotificationsSettings(author,  settings -> settings.setEnableNotificationsVk(false));
         var message = MessageModel.builder()
                 .text("Уведомления отключены")
                 .target(context.getMessage().getAuthor())

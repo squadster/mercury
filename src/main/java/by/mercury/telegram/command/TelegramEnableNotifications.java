@@ -20,8 +20,7 @@ public class TelegramEnableNotifications extends TelegramAbstractCommand {
     }
 
     private void enable(UserModel rootUser, AbsSender sender, Chat chat) {
-        rootUser.setEnableNotificationsTelegram(true);
-        getUserService().save(rootUser);
+        getUserService().updateNotificationsSettings(rootUser,  settings -> settings.setEnableNotificationsTelegram(true));
         var message = new SendMessage();
         message.setChatId(chat.getId().toString());
         message.setText("Уведомления включены");
