@@ -43,8 +43,8 @@ public abstract class TelegramAbstractCommand extends BotCommand implements Comm
     
     protected void execute(AbsSender sender, SendMessage message) {
         try {
+            log.info("New text message will be sent to TELEGRAM with chat id {}", message.getChatId());
             sender.execute(message);
-            log.info("Sent message {}", message);
         } catch (TelegramApiException exception) {
             log.warn("Error during sending {} : {}", message, exception.getMessage());
         }
