@@ -48,10 +48,10 @@ public class SampleDataGenerator implements ApplicationRunner, Ordered {
                     .id(Long.valueOf(peerId))
                     .uid(peerId)
                     .peerId(Integer.parseInt(peerId))
-                    .enableNotificationsTelegram(true)
-                    .enableNotificationsVk(true)
                     .build();
             user = userService.save(user);
+            userService.updateNotificationsSettings(user,  settings -> settings.setEnableNotificationsTelegram(true));
+            userService.updateNotificationsSettings(user,  settings -> settings.setEnableNotificationsVk(true));
             generateSquad(user);
             var schedule = generateSchedule();
             generateLesson(100L, 1, "Name 1", "Teacher 1", "Note 1", schedule);

@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @EqualsAndHashCode(of = {"id"})
 @Builder
 @Entity
-@Table(name = "user_configirations")
+@Table(name = "user_configurations")
 public class UserConfigurationModel {
 
     @Id

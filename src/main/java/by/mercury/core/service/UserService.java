@@ -4,9 +4,11 @@ import by.mercury.core.data.UserConfiguration;
 import by.mercury.core.model.Channel;
 import by.mercury.core.model.UserConfigurationModel;
 import by.mercury.core.model.UserModel;
+import by.mercury.core.model.UserSettingsModel;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * Interface for users services operations
@@ -59,6 +61,8 @@ public interface UserService {
     UserConfiguration getUserConfigurationForUser(UserModel user);
 
     UserConfiguration getDefaultUserConfigurationForUser(UserModel user);
+    
+    void updateNotificationsSettings(UserModel user, Consumer<UserSettingsModel> setter);
     
     void update(UserConfigurationModel configurations);
 }

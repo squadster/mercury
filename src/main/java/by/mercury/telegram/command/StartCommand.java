@@ -21,7 +21,8 @@ public class StartCommand extends TelegramAbstractCommand {
         var builder = new StringBuilder();
         if (getRootUser(user).isEmpty()) {
             builder.append("Привет, ").append(user.getUserName())
-                    .append(", Выполни команду:\n'/set_token <token>'\nгде <token> - токен, который вы получили из VK");
+                    .append(", Выполни команду:\n'/set_token <token>'\nгде <token> - токен, который вы получили из VK")
+                    .append("\nВведите /help, чтобы узнать все команды");
             persistChatIdForUser(user, chat);
         } else {
             builder.append("Вы уже начали беседу");
