@@ -20,8 +20,7 @@ public class TelegramDisableNotifications extends TelegramAbstractCommand {
     }
 
     private void disable(UserModel rootUser, AbsSender sender, Chat chat) {
-        rootUser.setEnableNotificationsTelegram(false);
-        getUserService().save(rootUser);
+        getUserService().updateNotificationsSettings(rootUser,  settings -> settings.setEnableNotificationsTelegram(false));
         var message = new SendMessage();
         message.setChatId(chat.getId().toString());
         message.setText("Уведомления отлючены");

@@ -10,18 +10,17 @@ import java.util.Arrays;
 import java.util.Collections;
 
 @Component
-public class VkEnableNotificationsCommand extends AbstractVkCommand {
+public class VkHelpCommand extends AbstractVkCommand {
 
-    public VkEnableNotificationsCommand() {
-        super(Arrays.asList("включить", "enable"));
+    public VkHelpCommand() {
+        super(Arrays.asList("help"));
     }
 
     @Override
     public void execute(CommandContext context) {
-        var author = context.getMessage().getAuthor();
-        getUserService().updateNotificationsSettings(author,  settings -> settings.setEnableNotificationsVk(true));
         var message = MessageModel.builder()
-                .text("Уведомления включены")
+                .text("Команды бота:\nвключить - включает уведомления\nотключить - отключает уведомления" +
+                        "\ntelegram - создать токен для регистрации в Telegram\nрасписание - узнать текущее расписание")
                 .target(context.getMessage().getAuthor())
                 .types(Collections.singletonList(MessageType.TEXT))
                 .targetChannels(Collections.singleton(Channel.VK))
@@ -29,4 +28,3 @@ public class VkEnableNotificationsCommand extends AbstractVkCommand {
         getMessageService().send(message);
     }
 }
-
