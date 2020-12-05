@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Data
@@ -20,11 +18,9 @@ import javax.persistence.Table;
 @Builder
 @Entity
 @Table(name = "user_configurations")
-@SequenceGenerator(name = "user_configurations_id_seq")
 public class UserConfigurationModel {
 
     @Id
-    @GeneratedValue(generator = "user_configurations_id_seq")
     private Long id;
     
     @Column(name = "user_id")
