@@ -14,7 +14,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 @Slf4j
 public class ScheduleCommand extends TelegramAbstractCommand {
 
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
     
     public ScheduleCommand(ScheduleService scheduleService) {
         super("schedule", "Получить расписание");
@@ -32,9 +32,10 @@ public class ScheduleCommand extends TelegramAbstractCommand {
     private void sendSchedule(UserModel rootUser, AbsSender sender, Chat chat) {
         var message = new SendDocument();
         message.setChatId(chat.getId().toString());
-        var schedule = scheduleService.getScheduleForUser(rootUser);
-        message.setDocument(scheduleService.generateSchedule(schedule));
-        execute(sender, message);
+        scheduleService.getScheduleForUser(rootUser).ifPresentOrElse(schedule -> {
+            message.setDocument(scheduleService.generateSchedule(schedule));
+            execute(sender, message);
+        }, () -> sendNoScheduleMessage(sender, chat));
     }
 
     private void sendNoScheduleMessage(AbsSender sender, Chat chat) {
