@@ -4,24 +4,19 @@ import by.mercury.core.command.CommandContext;
 import by.mercury.core.data.MessageType;
 import by.mercury.core.model.Channel;
 import by.mercury.core.model.MessageModel;
-import by.mercury.core.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.UUID;
 
 import static by.mercury.vkontakte.preprocessor.RegistrationPreprocessor.IS_FIRST_MESSAGE;
 
 @Component
 @Slf4j
 public class VkGenerateTokenCommand extends AbstractVkCommand {
-
-    private UserService userService;
     
-    public VkGenerateTokenCommand(UserService userService) {
+    public VkGenerateTokenCommand() {
         super(Collections.singletonList("telegram"));
-        this.userService = userService;
     }
 
     @Override
@@ -40,10 +35,6 @@ public class VkGenerateTokenCommand extends AbstractVkCommand {
         if (!Boolean.parseBoolean(context.getParameters().get(IS_FIRST_MESSAGE).toString())) {
             return "Вы не зарегистрированы в системе";
         }
-        var user = context.getMessage().getAuthor();
-        var token = UUID.randomUUID().toString();
-        user.setTelegramToken(token);
-        userService.save(user);
-        return token;
+        return context.getMessage().getAuthor().getTelegramToken();
     }
 }

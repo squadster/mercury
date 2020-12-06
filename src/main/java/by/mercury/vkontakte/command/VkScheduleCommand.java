@@ -17,9 +17,9 @@ import java.util.Optional;
 @Component
 public class VkScheduleCommand extends AbstractVkCommand {
     
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
     
-    private UploadService uploadService;
+    private final UploadService uploadService;
     
     public VkScheduleCommand(ScheduleService scheduleService, UploadService uploadService) {
         super(Arrays.asList("расписание", "schedule", "timetable", "table"));
@@ -32,7 +32,7 @@ public class VkScheduleCommand extends AbstractVkCommand {
         Optional.of(context)
                 .map(CommandContext::getMessage)
                 .map(MessageModel::getAuthor)
-                .map(scheduleService::getScheduleForUser)
+                .flatMap(scheduleService::getScheduleForUser)
                 .map(scheduleService::generateSchedule)
                 .ifPresentOrElse(file -> uploadService.uploadFile(messageOnSuccess(context), file, DocsType.DOC), 
                         () -> getMessageService().send(messageOnFailure(context)));
@@ -51,7 +51,7 @@ public class VkScheduleCommand extends AbstractVkCommand {
         return MessageModel.builder()
                 .target(context.getMessage().getAuthor())
                 .types(Collections.singletonList(MessageType.TEXT))
-                .text("Не удалось получить расписание")
+                .text("Расписание не найдено")
                 .build();
     }
 }

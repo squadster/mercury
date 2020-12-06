@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.lang.String.format;
@@ -29,12 +30,12 @@ public class DefaultScheduleService implements ScheduleService {
 
     private static final String PDF_PREFIX = "pdf_%d_";
     private static final String PDF_EXTENSION = ".pdf";
-    private static final String TITLE = "Schedule for %s on %s";
+    private static final String TITLE = "Расписание для %s на %s";
     private static final Integer COLUMNS = 4;
 
-    private ScheduleDao scheduleDao;
+    private final ScheduleDao scheduleDao;
     
-    private SquadMemberDao squadMemberDao;
+    private final SquadMemberDao squadMemberDao;
 
     public DefaultScheduleService(ScheduleDao scheduleDao, SquadMemberDao squadMemberDao) {
         this.scheduleDao = scheduleDao;
@@ -42,11 +43,10 @@ public class DefaultScheduleService implements ScheduleService {
     }
 
     @Override
-    public ScheduleModel getScheduleForUser(UserModel user) {
+    public Optional<ScheduleModel> getScheduleForUser(UserModel user) {
         return squadMemberDao.findByUserId(user.getId())
                 .map(SquadMemberModel::getSquadId)
-                .flatMap(scheduleDao::findBySquad)
-                .orElseThrow(() -> new IllegalArgumentException("There is no schedule for " + user.getId() + "\n"));
+                .flatMap(scheduleDao::findBySquad);
     }
 
     @Override
