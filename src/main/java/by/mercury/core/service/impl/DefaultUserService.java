@@ -111,6 +111,7 @@ public class DefaultUserService implements UserService {
                 .rate("medium")
                 .build();
         if (user.getId() != null) {
+            configurations.setId(user.getId());
             configurations = userConfigurationDao.save(configurations);
         }
         return convert(configurations, user);

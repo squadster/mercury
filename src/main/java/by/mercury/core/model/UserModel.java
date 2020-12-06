@@ -36,7 +36,7 @@ public class UserModel {
     @Column(name = "telegram_id")
     private Integer telegramId;
     
-    @Column(name = "telegram_token")
+    @Column(name = "hash_id")
     private String telegramToken;
 
     @Column(name = "telegram_chat_id")
