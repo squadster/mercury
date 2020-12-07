@@ -4,11 +4,11 @@ import by.mercury.core.model.ScheduleModel;
 import by.mercury.core.model.UserModel;
 
 import java.io.File;
-import java.util.Optional;
+import java.util.List;
 
 public interface ScheduleService {
     
-    Optional<ScheduleModel> getScheduleForUser(UserModel user);
+    List<ScheduleModel> getScheduleForUser(UserModel user);
     
-    File generateSchedule(ScheduleModel scheduleModel);
+    File generateSchedule(List<ScheduleModel> scheduleModel);
 }

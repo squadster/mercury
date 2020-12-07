@@ -33,6 +33,10 @@ public class LessonModel {
     private Integer index;
     
     private String note;
+
+    private String type;
+
+    private String classroom;
     
     @ManyToOne
     @JoinColumn(name = "timetable_id")

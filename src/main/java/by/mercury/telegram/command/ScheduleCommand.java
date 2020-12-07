@@ -10,6 +10,8 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
+import java.util.Optional;
+
 @Component
 @Slf4j
 public class ScheduleCommand extends TelegramAbstractCommand {
@@ -32,7 +34,7 @@ public class ScheduleCommand extends TelegramAbstractCommand {
     private void sendSchedule(UserModel rootUser, AbsSender sender, Chat chat) {
         var message = new SendDocument();
         message.setChatId(chat.getId().toString());
-        scheduleService.getScheduleForUser(rootUser).ifPresentOrElse(schedule -> {
+        Optional.of(scheduleService.getScheduleForUser(rootUser)).ifPresentOrElse(schedule -> {
             message.setDocument(scheduleService.generateSchedule(schedule));
             execute(sender, message);
         }, () -> sendNoScheduleMessage(sender, chat));

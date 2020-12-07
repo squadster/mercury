@@ -32,7 +32,7 @@ public class VkScheduleCommand extends AbstractVkCommand {
         Optional.of(context)
                 .map(CommandContext::getMessage)
                 .map(MessageModel::getAuthor)
-                .flatMap(scheduleService::getScheduleForUser)
+                .map(scheduleService::getScheduleForUser)
                 .map(scheduleService::generateSchedule)
                 .ifPresentOrElse(file -> uploadService.uploadFile(messageOnSuccess(context), file, DocsType.DOC), 
                         () -> getMessageService().send(messageOnFailure(context)));
