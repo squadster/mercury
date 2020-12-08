@@ -15,8 +15,11 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,23 +29,40 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class DefaultScheduleService implements ScheduleService {
 
-    private static final String FONT_PATH = "src/main/resources/fonts/HelveticaRegular.ttf";
-    private static final Font FONT = FontFactory.getFont(FONT_PATH, BaseFont.IDENTITY_H, true);
+    private static final String FONT_PATH = "classpath:/fonts/HelveticaRegular.ttf";
     private static final String PDF_PREFIX = "pdf_";
     private static final String PDF_EXTENSION = ".pdf";
     private static final String TITLE = "Расписание для %s на %s\n";
     private static final Integer COLUMNS = 6;
 
+    private Font font;
+
+    private final ResourceLoader resourceLoader;
+    
     private final ScheduleDao scheduleDao;
     
     private final SquadMemberDao squadMemberDao;
 
-    public DefaultScheduleService(ScheduleDao scheduleDao, SquadMemberDao squadMemberDao) {
+    public DefaultScheduleService(ResourceLoader resourceLoader, ScheduleDao scheduleDao, 
+                                  SquadMemberDao squadMemberDao) {
+        this.resourceLoader = resourceLoader;
         this.scheduleDao = scheduleDao;
         this.squadMemberDao = squadMemberDao;
+    }
+    
+    @PostConstruct
+    private void initFont() {
+        try {
+            var resource = resourceLoader.getResource(FONT_PATH);
+            FontFactory.register(resource.getURL().getPath(), "HelveticaRegular");
+            font = FontFactory.getFont("HelveticaRegular", BaseFont.IDENTITY_H, true);
+        } catch (IOException exception) {
+            log.info("Exception during loading font", exception);
+        }
     }
 
     @Override
@@ -80,7 +100,7 @@ public class DefaultScheduleService implements ScheduleService {
 
     private void createTitle(ScheduleModel schedule, Document pdfDocument) throws DocumentException {
         var date = schedule.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        pdfDocument.add(new Paragraph(String.format(TITLE, schedule.getSquad(), date), FONT));
+        pdfDocument.add(new Paragraph(String.format(TITLE, schedule.getSquad(), date), font));
     }
 
     private List<LessonModel> getLessons(ScheduleModel schedule) {
@@ -91,19 +111,19 @@ public class DefaultScheduleService implements ScheduleService {
 
     private void writeLessons(List<LessonModel> lessons, Document pdfDocument) throws DocumentException {
         var table = new PdfPTable(COLUMNS);
-        table.addCell(new Paragraph("№", FONT));
-        table.addCell(new Paragraph("Название", FONT));
-        table.addCell(new Paragraph("Тип", FONT));
-        table.addCell(new Paragraph("Преподаватель", FONT));
-        table.addCell(new Paragraph("Аудитория", FONT));
-        table.addCell(new Paragraph("Заметка", FONT));
+        table.addCell(new Paragraph("№", font));
+        table.addCell(new Paragraph("Название", font));
+        table.addCell(new Paragraph("Тип", font));
+        table.addCell(new Paragraph("Преподаватель", font));
+        table.addCell(new Paragraph("Аудитория", font));
+        table.addCell(new Paragraph("Заметка", font));
         lessons.forEach(lesson -> {
-            table.addCell(new Paragraph(lesson.getIndex().toString(), FONT));
-            table.addCell(new Paragraph(lesson.getName(), FONT));
-            table.addCell(new Paragraph(lesson.getType(), FONT));
-            table.addCell(new Paragraph(lesson.getTeacher(), FONT));
-            table.addCell(new Paragraph(lesson.getClassroom(), FONT));
-            table.addCell(new Paragraph(lesson.getNote(), FONT));
+            table.addCell(new Paragraph(lesson.getIndex().toString(), font));
+            table.addCell(new Paragraph(lesson.getName(), font));
+            table.addCell(new Paragraph(lesson.getType(), font));
+            table.addCell(new Paragraph(lesson.getTeacher(), font));
+            table.addCell(new Paragraph(lesson.getClassroom(), font));
+            table.addCell(new Paragraph(lesson.getNote(), font));
         });
         pdfDocument.add(table);
     }
