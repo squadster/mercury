@@ -16,6 +16,8 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +35,8 @@ import java.util.stream.Collectors;
 @Service
 public class DefaultScheduleService implements ScheduleService {
 
-    private static final String FONT_PATH = "classpath:/fonts/HelveticaRegular.ttf";
+    @Value("${font.path}")
+    private String fontPath;
     private static final String PDF_PREFIX = "pdf_";
     private static final String PDF_EXTENSION = ".pdf";
     private static final String TITLE = "Расписание для %s на %s\n";
@@ -57,9 +60,14 @@ public class DefaultScheduleService implements ScheduleService {
     @PostConstruct
     private void initFont() {
         try {
-            var resource = resourceLoader.getResource(FONT_PATH);
-            FontFactory.register(resource.getURL().getPath(), "HelveticaRegular");
+            var resource = this.getClass().getClassLoader().getResourceAsStream(fontPath);
+            var tempFile = File.createTempFile("temp_font", "_HelveticaRegular.ttf");
+            try (var out = new FileOutputStream(tempFile)) {
+                IOUtils.copy(resource, out);
+            }
+            FontFactory.register(tempFile.getPath(), "HelveticaRegular");
             font = FontFactory.getFont("HelveticaRegular", BaseFont.IDENTITY_H, true);
+            tempFile.deleteOnExit();
         } catch (IOException exception) {
             log.info("Exception during loading font", exception);
         }
