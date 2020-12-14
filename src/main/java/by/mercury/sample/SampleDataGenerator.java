@@ -47,6 +47,7 @@ public class SampleDataGenerator implements ApplicationRunner, Ordered {
                     .id(Long.valueOf(peerId))
                     .uid(peerId)
                     .peerId(Integer.parseInt(peerId))
+                    .telegramToken("Token")
                     .build();
             user = userService.save(user);
             userService.updateNotificationsSettings(user,  settings -> settings.setEnableNotificationsTelegram(true));

@@ -31,6 +31,11 @@ public class DefaultSpeechService implements SpeechService {
     }
     
     @Override
+    public File synthesize(String text, String voiceId) {
+        return synthesizeSpeechStrategy.synthesize(text, voiceId);
+    }
+
+    @Override
     public String recognize(File audio) {
         var wav = encodeToWav(audio);
         var text = recognizeSpeechStrategy.recognize(wav);
@@ -45,7 +50,7 @@ public class DefaultSpeechService implements SpeechService {
 
     private File encodeToWav(File mp3) {
         try {
-            var outputFileName = mp3.getAbsolutePath().replace("mp3", "wav");
+            var outputFileName = mp3.getAbsolutePath().replace("mp3", "wav").replace("ogg", "wav");
             var process = new ProcessBuilder("ffmpeg", "-i", mp3.getAbsolutePath(), "-ar", "16000", "-ac", "1", outputFileName);
             process.redirectErrorStream(true).redirectOutput(ProcessBuilder.Redirect.INHERIT);
             process.start().waitFor();

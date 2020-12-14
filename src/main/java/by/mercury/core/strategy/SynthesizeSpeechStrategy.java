@@ -12,4 +12,6 @@ import java.io.File;
 public interface SynthesizeSpeechStrategy {
 
     File synthesize(MessageModel message);
+
+    File synthesize(String text, String voiceId);
 }

@@ -13,5 +13,7 @@ public interface SpeechService {
     
     File synthesize(MessageModel message);
 
+    File synthesize(String text, String voiceId);
+    
     String recognize(File audio);
 }

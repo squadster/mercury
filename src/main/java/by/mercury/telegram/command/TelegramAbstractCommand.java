@@ -59,7 +59,7 @@ public abstract class TelegramAbstractCommand extends BotCommand implements Comm
         }
     }
     
-    protected Optional<UserModel> getRootUser(User user) {
+    public Optional<UserModel> getRootUser(User user) {
         return Optional.of(user)
                 .map(User::getId)
                 .flatMap(userService::findByTelegramId);

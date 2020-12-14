@@ -55,7 +55,8 @@ dependencies {
     compile 'io.micrometer:micrometer-registry-elastic:1.1.4'
 
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.13'
-
+    compile group: 'com.h2database', name: 'h2', version: '1.4.200'
+    
     compile (group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: '5.2') {
         exclude group: 'org.slf4j', module: 'slf4j-log4j'
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'

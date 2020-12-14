@@ -34,7 +34,7 @@ public class VkUnknownCommand extends AbstractVkCommand {
         log.info("Did not recognize message: {}, from {}", source.getText(), source.getAuthor().getPeerId());
         var message = MessageModel.builder()
                 .target(source.getAuthor())
-                .text("Не удалось распознать сообщение")
+                .text("Не удалось распознать сообщение: " + context.getMessage().getText())
                 .types(Collections.singletonList(MessageType.TEXT))
                 .targetChannels(Collections.singleton(Channel.VK))
                 .build();

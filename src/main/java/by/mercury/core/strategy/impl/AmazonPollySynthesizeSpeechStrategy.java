@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import software.amazon.awssdk.services.polly.PollyClient;
 import software.amazon.awssdk.services.polly.model.OutputFormat;
 import software.amazon.awssdk.services.polly.model.SynthesizeSpeechRequest;
+import software.amazon.awssdk.services.polly.model.VoiceId;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +27,21 @@ public class AmazonPollySynthesizeSpeechStrategy extends AbstractSynthesizeSpeec
                     .outputFormat(OutputFormat.MP3)
                     .voiceId(configurations.getSpeaker())
                     .text(message.getText())
+                    .build();
+            return save(file, pollyClient.synthesizeSpeech(request).readAllBytes());
+        } catch (IOException exception) {
+            throw new UncheckedIOException(exception);
+        }
+    }
+
+    @Override
+    public File synthesize(String text, String voiceId) {
+        try {
+            var file = createTempFile();
+            var request = SynthesizeSpeechRequest.builder()
+                    .outputFormat(OutputFormat.MP3)
+                    .voiceId(VoiceId.valueOf(voiceId))
+                    .text(text)
                     .build();
             return save(file, pollyClient.synthesizeSpeech(request).readAllBytes());
         } catch (IOException exception) {
