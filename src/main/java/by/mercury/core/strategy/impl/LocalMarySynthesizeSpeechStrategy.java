@@ -32,6 +32,11 @@ public class LocalMarySynthesizeSpeechStrategy extends AbstractSynthesizeSpeechS
     }
 
     @Override
+    public File synthesize(String text, String voiceId) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected String getFileExtension() {
         return AUDIO_MESSAGE_FILE_EXTENSION;
     }

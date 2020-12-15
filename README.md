@@ -21,7 +21,9 @@ git clone https://github.com/squadster/mercury.git
 
 ### Deployment
 
-Soon...
+We use GitHub packages for deployment.
+
+Check out [Dockerfile](Dockerfile) and [this repo](https://github.com/squadster/squadster-deployment) for more information.
 
 For the whole application check out [this repo](https://github.com/squadster/squadster-deployment).
 

@@ -96,22 +96,24 @@ public class DefaultUserService implements UserService {
 
     @Override
     public UserConfiguration getUserConfigurationForUser(UserModel user) {
-        return userConfigurationDao.findByUserId(user.getId())
+        return Optional.ofNullable(user).map(UserModel::getId)
+                .flatMap(userConfigurationDao::findByUserId)
                 .map(model -> convert(model, user))
                 .orElseGet(() -> getDefaultUserConfigurationForUser(user));
     }
 
     @Override
     public UserConfiguration getDefaultUserConfigurationForUser(UserModel user) {
+        var id = Optional.ofNullable(user).map(UserModel::getId);
         var configurations = UserConfigurationModel.builder()
-                .userId(user.getId())
+                .userId(id.orElse(null))
                 .language(Locale.ENGLISH.getLanguage())
                 .speaker("Maxim")
                 .enableVoiceMessages(true)
                 .rate("medium")
                 .build();
-        if (user.getId() != null) {
-            configurations.setId(user.getId());
+        if (id.isPresent()) {
+            configurations.setId(id.get());
             configurations = userConfigurationDao.save(configurations);
         }
         return convert(configurations, user);

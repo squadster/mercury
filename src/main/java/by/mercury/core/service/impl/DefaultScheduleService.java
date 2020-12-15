@@ -23,8 +23,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
@@ -60,7 +62,12 @@ public class DefaultScheduleService implements ScheduleService {
     @PostConstruct
     private void initFont() {
         try {
-            var resource = this.getClass().getClassLoader().getResourceAsStream(fontPath);
+            InputStream resource;
+            if (fontPath.contains("src")) {
+                resource = new File(fontPath).toURL().openStream();
+            } else {
+                resource = resourceLoader.getResource(fontPath).getInputStream();
+            }
             var tempFile = File.createTempFile("temp_font", "_HelveticaRegular.ttf");
             try (var out = new FileOutputStream(tempFile)) {
                 IOUtils.copy(resource, out);

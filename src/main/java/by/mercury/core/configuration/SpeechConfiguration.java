@@ -32,25 +32,25 @@ public class SpeechConfiguration {
     }
 
     @Bean
-    @Profile({"local", "dev"})
+    @Profile({"dev"})
     public LocalMaryInterface localMaryInterface() throws MaryConfigurationException {
         return new LocalMaryInterface();
     }
 
     @Bean
-    @Profile({"local", "dev"})
+    @Profile({"dev"})
     public LocalMarySynthesizeSpeechStrategy localMarySynthesizeSpeechStrategy() {
         return new LocalMarySynthesizeSpeechStrategy();
     }
 
     @Bean
-    @Profile({"release"})
+    @Profile({"local", "release"})
     public AmazonPollySynthesizeSpeechStrategy amazonPollySynthesizeSpeechStrategy() {
         return new AmazonPollySynthesizeSpeechStrategy();
     }
 
     @Bean
-    @Profile({"release"})
+    @Profile({"local", "release"})
     public PollyClient pollyClient() {
         return PollyClient.builder()
                 .region(Region.EU_WEST_3)
@@ -59,13 +59,13 @@ public class SpeechConfiguration {
     }
 
     @Bean
-    @Profile({"release"})
+    @Profile({"local", "release"})
     public AmazonRecognizeSpeechStrategy amazonRecognizeSpeechStrategy() {
         return new AmazonRecognizeSpeechStrategy();
     }
 
     @Bean
-    @Profile({"release"})
+    @Profile({"local", "release"})
     public TranscribeStreamingAsyncClient transcribeStreamingAsyncClient() {
         return TranscribeStreamingAsyncClient.builder()
                 .credentialsProvider(SystemPropertyCredentialsProvider.create())
